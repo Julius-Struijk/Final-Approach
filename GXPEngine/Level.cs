@@ -10,26 +10,16 @@ using GXPEngine;
 class Level : GameObject
 {
     float boundarySize;
-    float Size;
-    //public Level(float pX, float pY, int pSize) : base("Assets/metalGrate.jpg")
     public Level(float pX, float pY, int pBoundarySize)
     {
-        //SetOrigin(width / 2, height / 2);
-        //width = pSize;
-        //height = pSize;
         boundarySize = pBoundarySize;
         x = pX;
         y = pY;
-        //AddChild(new Platform(-width * 4, -height * 4, 800, 200));
-        //AddChild(new Platform(-width * 4, -height * 4, 200, 800));
-        //AddChild(new Platform(width * 4 - 200, -height * 4, 200, 800));
-        //AddChild(new Platform(-width * 4, height * 4, 800, 200));
 
         AddChild(new Platform(-boundarySize, -boundarySize, 200, 50));
         AddChild(new Platform(-boundarySize, -boundarySize, 50, 200));
         AddChild(new Platform(boundarySize - 50, -boundarySize, 50, 200));
-        AddChild(new Platform(-boundarySize, boundarySize, 200, 50));
-        AddChild(new Platform(0, 0, 25, 25));
+        AddChild(new Platform(-boundarySize, boundarySize - 50, 200, 50));
     }
 
     void RotateLevel()
@@ -43,8 +33,6 @@ class Level : GameObject
         float targetAngle = vx.GetAngleDegrees();
 
         rotation = targetAngle;
-
-        if (Input.GetMouseButtonDown(0)) { Console.WriteLine(vx.Length()); }
     }
 
     void Update()
