@@ -10,11 +10,14 @@ using GXPEngine;
 class Level : GameObject
 {
     float boundarySize;
-    public Level(float pX, float pY, int pBoundarySize)
+    float targetAngle = 0;
+    Vec2 position = new Vec2();
+    public Level(Vec2 pPosition, int pBoundarySize)
     {
         boundarySize = pBoundarySize;
-        x = pX;
-        y = pY;
+        position = pPosition;
+        x = position.x;
+        y = position.y;
 
         AddChild(new Platform(-boundarySize, -boundarySize, 200, 50));
         AddChild(new Platform(-boundarySize, -boundarySize, 50, 200));
@@ -24,23 +27,50 @@ class Level : GameObject
 
     void RotateLevel()
     {
-        // Get the delta vector to mouse:
-        float dx = Input.mouseX - x;
-        float dy = Input.mouseY - y;
-        Vec2 vx = new Vec2(dx, dy);
+        //// Free Rotation
+        //// Get the delta vector to mouse:
+        //float dx = Input.mouseX - x;
+        //float dy = Input.mouseY - y;
+        //Vec2 vx = new Vec2(dx, dy);
 
-        // Get angle to mouse, convert from radians to degrees:
-        float targetAngle = vx.GetAngleDegrees();
+        //// Get angle to mouse, convert from radians to degrees:
+        //float targetAngle = vx.GetAngleDegrees();
 
-        rotation = targetAngle;
+        //rotation = targetAngle;
+
+        //Fixed 90 degree Rotation
+        if (Input.GetKeyDown(Key.UP)) { targetAngle = 0; }
+        if (Input.GetKeyDown(Key.RIGHT)) { targetAngle = 90; }
+        if (Input.GetKeyDown(Key.LEFT)) { targetAngle = -90; }
+        if (Input.GetKeyDown(Key.DOWN)) { targetAngle = 180; }
+
+        if (rotation - targetAngle < -180)
+        {
+            position.RotateDegrees(-1);
+            rotation = position.GetAngleDegrees();
+        }
+
+        else if (targetAngle > rotation + 0.5f || rotation - targetAngle > 180)
+        {
+            position.RotateDegrees(1);
+            float prevRotation = rotation;
+            rotation = position.GetAngleDegrees();
+            if (prevRotation - rotation > 1 && targetAngle == 180) { rotation = 180; }
+        }
+        else if (targetAngle < rotation - 0.5f)
+        {
+            position.RotateDegrees(-1);
+            rotation = position.GetAngleDegrees();
+        }
     }
 
     void Update()
     {
-        // Only moves level if the left mouse button is held.
-        if (Input.GetMouseButton(0))
-        {
-            RotateLevel();
-        }
+        RotateLevel();
+        //// Only moves level if the left mouse button is held.
+        //if (Input.GetMouseButton(0))
+        //{
+        //    RotateLevel();
+        //}
     }
 }
