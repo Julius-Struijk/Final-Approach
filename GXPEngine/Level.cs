@@ -13,7 +13,7 @@ class Level : GameObject
 
     int borderLenght = 585;
     int borderWidth = 35;
-    public Level(float pX, float pY, int pBoundarySize)
+    public Level(float pX, float pY, int pBoundarySize) : base(true)
     {
         boundarySize = pBoundarySize;
         x = pX;
