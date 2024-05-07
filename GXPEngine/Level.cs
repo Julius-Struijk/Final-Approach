@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -12,17 +12,20 @@ class Level : GameObject
     float boundarySize;
     float targetAngle = 0;
     Vec2 position = new Vec2();
-    public Level(Vec2 pPosition, int pBoundarySize)
+
+    int borderLenght = 585;
+    int borderWidth = 35;
+    public Level(float pX, float pY, int pBoundarySize) : base(true)
     {
         boundarySize = pBoundarySize;
         position = pPosition;
         x = position.x;
         y = position.y;
 
-        AddChild(new Platform(-boundarySize, -boundarySize, 200, 50));
-        AddChild(new Platform(-boundarySize, -boundarySize, 50, 200));
-        AddChild(new Platform(boundarySize - 50, -boundarySize, 50, 200));
-        AddChild(new Platform(-boundarySize, boundarySize - 50, 200, 50));
+        AddChild(new Platform(-boundarySize, -boundarySize, borderLenght, borderWidth));
+        AddChild(new Platform(-boundarySize, -boundarySize, borderWidth, borderLenght));
+        AddChild(new Platform(boundarySize - 50, -boundarySize, borderWidth, borderLenght));
+        AddChild(new Platform(-boundarySize, boundarySize - 50, borderLenght, borderWidth));
     }
 
     void RotateLevel()

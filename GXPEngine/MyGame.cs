@@ -1,17 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing.Text;
 using GXPEngine;
 //using Physics;
-
 public class MyGame : Game {
+
+    static CogWheel cogWheel;
+    static MyGame game;
+
+    public static MyGame GetGame()
+    {
+        return game;
+    }
+
     public MyGame() : base(1920, 1080, false,false,-1,-1,true)
 	{
         targetFps = 60; // Consistent, non variable framerate
-        AddChild(new Level(new Vec2(width / 2, height / 2), 100));
+        AddChild(new Level(width / 2, height / 2, 300));
+
+        cogWheel = new CogWheel(new Vec2(width/2, height/2), 10);
+        AddChild(cogWheel);
+
     }
 
 	void Update()

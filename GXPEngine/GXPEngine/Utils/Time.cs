@@ -43,7 +43,7 @@ namespace GXPEngine
 			}
 		}
 
-		internal static void newFrame() {
+        internal static void newFrame() {
 			previousFrameTime = time - previousTime;
 			previousTime = time;
 		}
