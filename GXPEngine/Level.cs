@@ -15,7 +15,7 @@ class Level : GameObject
 
     int borderLenght = 585;
     int borderWidth = 35;
-    public Level(float pX, float pY, int pBoundarySize) : base(true)
+    public Level(Vec2 pPosition, int pBoundarySize) : base(true)
     {
         boundarySize = pBoundarySize;
         position = pPosition;
