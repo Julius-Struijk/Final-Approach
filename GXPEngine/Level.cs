@@ -21,6 +21,8 @@ class Level : GameObject
         position = pPosition;
         x = position.x;
         y = position.y;
+        // This is to prevent the bug where the rotation starts out wrong, since it's based off the position of the object which is the wrong rotated wrong.
+        position = new Vec2(1101, 26);
 
         AddChild(new Platform(-boundarySize, -boundarySize, borderLenght, borderWidth));
         AddChild(new Platform(-boundarySize, -boundarySize, borderWidth, borderLenght));
