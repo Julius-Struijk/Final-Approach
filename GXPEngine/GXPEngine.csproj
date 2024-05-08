@@ -86,6 +86,7 @@
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
     <Compile Include="PanoramaManager.cs" />
     <Compile Include="Platform.cs" />
+    <Compile Include="SoundManager.cs" />
     <Compile Include="Vec2.cs" />
   </ItemGroup>
   <ItemGroup>
