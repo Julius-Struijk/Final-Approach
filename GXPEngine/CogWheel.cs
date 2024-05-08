@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
 using GXPEngine;
+using GXPEngine.Core;
 
 public enum EState
 {
@@ -26,15 +27,14 @@ class CogWheel: GameObject
     private bool isFalling = true;
 
 /*    Sprite healthBar = new Sprite("sprite");
-    Sprite healthBarFrame = new Sprite("sprite");
+    Sprite healthBarFrame = new Sprite("sprite");*/
 
     AnimationSprite currentAnimation;
-    AnimationSprite takeDamageAnimation = new AnimationSprite("animation", 1, 1);
-    AnimationSprite idleAnimation = new AnimationSprite("animation", 1 , 1);*/
+    AnimationSprite idleAnimation = new AnimationSprite("Assets/placeholderPlayer.png", 8, 1);
+    //AnimationSprite takeDamageAnimation = new AnimationSprite("animation", 1, 1);
 
     public EState eState;
 
-    EasyDraw circle;
     public CogWheel(Vec2 position, float health) : base(true) 
     {
         x = position.x;
@@ -43,46 +43,41 @@ class CogWheel: GameObject
         this.health = health;
         this.maxHealth = health;
 
-        
+        eState = EState.Idle;
+
+        idleAnimation.visible = false;
+        AddChild(idleAnimation);
+
+        scale = 0.1f;
     }
 
     void Update()
     {
-        spawnCogWheel();
         Movement();
-        //Animation();
-    }
-
-    void spawnCogWheel()
-    {
-        circle = new EasyDraw(canvas, canvas, true);
-        circle.Ellipse(canvas/2, canvas/2, radius, radius);
-        circle.SetXY(game.width/2, game.height/2);
-        circle.SetOrigin(canvas / 2, canvas / 2);
-        game.AddChild(circle);
+        Animation();
     }
 
     void Movement()
     {
         //Here we need to figure out the physics behind the movement of the cog wheel
+        //Collision collision = MoveUntilCollision(0, velocity.y);
+        //isFalling = collision == null;
 
-        if(isFalling)
+
+        if (isFalling)
         {
             float deltaTime = Time.deltaTime / 1000f;
             velocity += gravity * drag * characterMass * deltaTime;
         }
     }
 
-/*    void Animation()
+    void Animation()
     {
         AnimationSprite previousAnimation = currentAnimation;
-        switch(eState)
+        switch (eState)
         {
             case EState.Idle:
                 currentAnimation = idleAnimation;
-                break;
-            case EState.TakeDamage:
-                currentAnimation = takeDamageAnimation;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -111,7 +106,7 @@ class CogWheel: GameObject
         counter++;
     }
 
-    public void renderHealthBar(int offSetX, int offSetY)
+/*    public void renderHealthBar(int offSetX, int offSetY)
     {
         if (!this.game.HasChild(healthBarFrame)) { this.game.AddChild(healthBarFrame); }
         if (!this.game.HasChild(healthBar)) { this.game.AddChild(healthBar); }
