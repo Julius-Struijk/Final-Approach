@@ -22,7 +22,6 @@ public class MyGame : Game {
 
 
         level.spawnCharacter();
-        
     }
 
 	void Update()

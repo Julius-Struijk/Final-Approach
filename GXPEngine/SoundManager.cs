@@ -2,7 +2,7 @@
 using GXPEngine;
 internal class SoundManager
 {
-    public static SoundManager test = new SoundManager("test.wav", 1 , 1);
+    public static SoundManager test = new SoundManager("Sounds/test.mp3", 0 , 0);
 
     private Sound storedSound;
     private float defaultVolume;
