@@ -61,11 +61,6 @@ class CogWheel: GameObject
         Collision collision = MoveUntilCollision(0, velocity.y);
         isFalling = collision == null;
 
-        if(Input.GetKeyUp(Key.SPACE))
-        {
-            SoundManager.test.play(1, 1);
-        }
-
 
         if (isFalling)
         {

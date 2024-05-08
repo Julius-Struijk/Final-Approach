@@ -1,8 +1,8 @@
 ﻿using System;
 using GXPEngine;
-internal class SoundManager
+public class SoundManager
 {
-    public static SoundManager test = new SoundManager("Sounds/test.mp3", 0 , 0);
+    public static SoundManager test = new SoundManager("Sounds/test.wav", 0 , 0);
 
     private Sound storedSound;
     private float defaultVolume;
