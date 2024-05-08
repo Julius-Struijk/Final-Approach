@@ -84,6 +84,7 @@
     <Compile Include="GXPEngine\FMOD\FMODSoundSystem.cs" />
     <Compile Include="GXPEngine\SoLoud\Soloud.cs" />
     <Compile Include="GXPEngine\SoLoud\SoloudSoundSystem.cs" />
+    <Compile Include="PanoramaManager.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Vec2.cs" />
   </ItemGroup>

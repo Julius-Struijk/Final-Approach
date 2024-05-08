@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Text;
-using System.Threading.Tasks;
+
+using System.Media;
 using GXPEngine;
 
 class Level : GameObject
@@ -15,6 +10,8 @@ class Level : GameObject
 
     int borderLenght = 585;
     int borderWidth = 35;
+
+    private CogWheel cogwheel;
     public Level(Vec2 pPosition, int pBoundarySize) 
     {
         boundarySize = pBoundarySize;
@@ -77,5 +74,11 @@ class Level : GameObject
         //{
         //    RotateLevel();
         //}
+    }
+
+    public void spawnCharacter()
+    {
+        cogwheel = new CogWheel(new Vec2(0, 0), 10);
+        AddChild(cogwheel);
     }
 }

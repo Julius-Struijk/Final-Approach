@@ -17,8 +17,6 @@ class CogWheel: GameObject
     private float drag = 0.05f;
     private float characterMass = 40f;
 
-    int radius = 50;
-    int canvas = 60;
     int counter;
     int frame;
 
@@ -60,8 +58,8 @@ class CogWheel: GameObject
     void Movement()
     {
         //Here we need to figure out the physics behind the movement of the cog wheel
-        //Collision collision = MoveUntilCollision(0, velocity.y);
-        //isFalling = collision == null;
+        Collision collision = MoveUntilCollision(0, velocity.y);
+        isFalling = collision == null;
 
 
         if (isFalling)
