@@ -7,11 +7,38 @@ using GXPEngine;
 
 class Platform : Sprite
 {
-    public Platform(float pX, float pY, int pWidth, int pHeight) : base ("Assets/greenButton.png")
+    LineSegment Top;
+    LineSegment Bottom;
+    LineSegment Left;
+    LineSegment Right;
+
+    float radiusWidth;
+    float radiusHeight;
+    public Platform(Vec2 pPosition, int pWidth, int pHeight) : base("Assets/greenButton.png")
     {
-        x = pX;
-        y = pY;
+        SetOrigin(width / 2, height / 2);
         width = pWidth;
+        radiusWidth = width / 2;
         height = pHeight;
+        radiusHeight = height / 2;
+        x = pPosition.x + radiusWidth;
+        y = pPosition.y + radiusHeight;
+    }
+    // Adding Lines Seperately from the rest of the platform so parent is assigned and the lines can be added there.
+
+    public void AddLines()
+    {
+
+        Top = new LineSegment(new Vec2(x + radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y - radiusHeight), 0xff00ff00, 3);
+        parent.AddChild(Top);
+
+        Bottom = new LineSegment(new Vec2(x - radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y + radiusHeight), 0xff00ff00, 3);
+        parent.AddChild(Bottom);
+
+        Left = new LineSegment(new Vec2(x - radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y + radiusHeight), 0xff00ff00, 3);
+        parent.AddChild(Left);
+
+        Right = new LineSegment(new Vec2(x + radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y - radiusHeight), 0xff00ff00, 3);
+        parent.AddChild(Right);
     }
 }
