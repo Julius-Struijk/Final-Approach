@@ -40,5 +40,8 @@ class Platform : Sprite
 
         Right = new LineSegment(new Vec2(x + radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y - radiusHeight), 0xff00ff00, 3);
         parent.AddChild(Right);
+
+/*        Right = new BouncyWall(new Vec2(x + radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y - radiusHeight), 1.1f, 0xff00ff00, 3);
+        parent.AddChild(Right);*/
     }
 }

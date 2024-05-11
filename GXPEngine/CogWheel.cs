@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
@@ -252,13 +252,17 @@ class CogWheel: GameObject
 
     void ResolveCollision(CollisionInfo col)
     {
-        if (col.other is CogWheel)
+        if(col.other is CogWheel)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normalized();
             velocity.Reflect(unitNormal, bounciness);
-        }
-        else if (col.other is LineSegment)
+        } else if(col.other is BouncyWall wall)
+        {
+            position += velocity * col.timeOfImpact;
+            Vec2 unitNormal = col.normal.Normal();
+            velocity.Reflect(unitNormal, wall.bounciness);
+        } else if(col.other is LineSegment)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normal();

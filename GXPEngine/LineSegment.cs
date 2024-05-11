@@ -4,7 +4,7 @@ using GXPEngine.OpenGL;
 
 namespace GXPEngine
 {
-	/// <summary>
+    /// <summary>
 	/// Implements an OpenGL line
 	/// </summary>
 	public class LineSegment : GameObject

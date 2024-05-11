@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BouncyWall.cs" />
     <Compile Include="CogWheel.cs" />
     <Compile Include="CollisionInfo.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />

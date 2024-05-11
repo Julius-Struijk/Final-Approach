@@ -19,4 +19,6 @@ public class SoundManager
     {
         storedSound.Play(false, chanel, volume, 0);
     }
+
+    //SoundManager.test.play(0.5f, 0); to play the sounds
 }
