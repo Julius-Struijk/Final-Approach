@@ -28,6 +28,7 @@ class CogWheel: GameObject
 
     private Vec2 gravity = new Vec2(0, 9.81f);
     private Vec2 velocity;
+    Vec2 extraVelocity;
     Vec2 position;
     Vec2 _oldPosition;
     public readonly int radius;
@@ -37,7 +38,6 @@ class CogWheel: GameObject
 
     AnimationSprite currentAnimation;
     AnimationSprite idleAnimation;
-    EasyDraw Ball;
     //AnimationSprite takeDamageAnimation = new AnimationSprite("animation", 1, 1);
 
     public EState eState;
@@ -49,14 +49,9 @@ class CogWheel: GameObject
         position = pPosition;
         moving = pMoving;
 
-        idleAnimation = new AnimationSprite("Assets/placeholderPlayerFixed.png", 8, 1);
+        idleAnimation = new AnimationSprite("Assets/placeholderPlayerNoSpace.png", 8, 1);
         idleAnimation.width = radius * 2;
         idleAnimation.height = radius * 2;
-
-        Ball = new EasyDraw(radius * 2, radius * 2, false);
-        idleAnimation.SetOrigin(radius, radius);
-        Ball.SetOrigin(radius, radius);
-        AddChild(Ball);
 
         this.health = health;
         this.maxHealth = health;
@@ -73,9 +68,6 @@ class CogWheel: GameObject
     {
         Movement();
         Animation();
-        Draw(230, 200, 0);
-        //Console.WriteLine("Animation position: {0}, {1}", idleAnimation.x, idleAnimation.y);
-        //Console.WriteLine("Ball position: {0}, {1}", Ball.x, Ball.y);
     }
 
     void UpdateScreenPosition()
@@ -83,15 +75,8 @@ class CogWheel: GameObject
         x = position.x;
         y = position.y;
 
-        //idleAnimation.x = -radius;
-        //idleAnimation.y = -radius;
-    }
-
-    void Draw(byte red, byte green, byte blue)
-    {
-        Ball.Fill(red, green, blue);
-        Ball.Stroke(red, green, blue);
-        Ball.Ellipse(radius, radius, 2 * radius, 2 * radius);
+        idleAnimation.x = -radius;
+        idleAnimation.y = -radius;
     }
 
     void Movement()
@@ -102,11 +87,24 @@ class CogWheel: GameObject
 
             if (firstTime) {
                 float deltaTime = Time.deltaTime / 1000f;
-                //ChangeGravity();
                 velocity += gravity * drag * characterMass * deltaTime;
+                //if(extraVelocity.x == 0 && extraVelocity.y == 0) { extraVelocity = velocity; }
             }
             else { firstTime = true; }
             _oldPosition = position;
+
+            rotation = -parent.rotation;
+            // Doesn't quite work right when I assign it to extra velocity Should be small changes but it isn't. 
+            // Here the velocity takes the rotation effect which works the best but then it negates the gravity and all that.
+            //if (oldRotation != parent.rotation)
+            //{
+            //    Console.WriteLine("Pre: {0}", velocity);
+            //    velocity.RotateDegrees(-parent.rotation + oldRotation);
+            //    Console.WriteLine("Post: {0}", velocity);
+            //    oldRotation = parent.rotation;
+            //}
+            ChangeGravity();
+
             position += velocity;
 
             CollisionInfo firstCollision = FindEarliestCollision();
@@ -118,14 +116,6 @@ class CogWheel: GameObject
                     firstTime = false;
                 }
             }
-            rotation = -parent.rotation;
-            if (oldRotation != parent.rotation)
-            {
-                //position.SetAngleDegrees(-parent.rotation);
-                position.RotateDegrees(-parent.rotation + oldRotation);
-                oldRotation = parent.rotation;
-            }
-            else { ChangeGravity(); }
             UpdateScreenPosition();
         }
     }
@@ -252,7 +242,6 @@ class CogWheel: GameObject
                 float lineDistance = differenceVectorPOI.Dot((line.end - line.start).Normalized());
                 if (lineDistance >= 0 && lineDistance <= (line.end - line.start).Length())
                 {
-                    Console.WriteLine("TOI Line: {0}", TOI);
                     return TOI;
                 }
             }
@@ -285,9 +274,13 @@ class CogWheel: GameObject
     void ChangeGravity()
     {
         if(Approx(parent.rotation, 0, 0.5f)) { gravity = new Vec2(0, 9.81f); }
-        if (Approx(parent.rotation, 180, 0.5f)) { gravity = new Vec2(0, -9.81f); }
+        if (Approx(parent.rotation, 45, 0.5f)) { gravity = new Vec2(4.905f, 4.905f); }
         if (Approx(parent.rotation, 90, 0.5f)) { gravity = new Vec2(9.81f, 0); }
+        if (Approx(parent.rotation, 135, 0.5f)) { gravity = new Vec2(4.905f, -4.905f); }
+        if (Approx(parent.rotation, 180, 0.5f)) { gravity = new Vec2(0, -9.81f); }
+        if (Approx(parent.rotation, -45, 0.5f)) { gravity = new Vec2(-4.905f, 4.905f); }
         if (Approx(parent.rotation, -90, 0.5f)) { gravity = new Vec2(-9.81f, 0); }
+        if (Approx(parent.rotation, -135, 0.5f)) { gravity = new Vec2(-4.905f, -4.905f); }
         //Console.WriteLine("Gravity changed to: {0}", gravity);
         //Console.WriteLine("Rotation: {0}", parent.rotation);
     }
