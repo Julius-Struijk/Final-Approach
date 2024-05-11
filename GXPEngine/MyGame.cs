@@ -3,7 +3,7 @@ using GXPEngine;
 //using Physics;
 public class MyGame : Game {
 
-    static Level level;
+    static Level objectLevel;
     static CogWheel cogWheel;
     static PanoramaManager panoramaManager;
 
@@ -15,13 +15,13 @@ public class MyGame : Game {
         AddChild(cogWheel);*/
 
         panoramaManager = new PanoramaManager(new Vec2(0, 0));
-        level = new Level(new Vec2(width / 2, height / 2), 300);
+        objectLevel = new Level(new Vec2(width / 2, height / 2), 300);
 
         AddChild(panoramaManager);
-        AddChild(level);
+        AddChild(objectLevel);
 
 
-        level.spawnCharacter();
+        //level.spawnCharacter();
     }
 
 	void Update()

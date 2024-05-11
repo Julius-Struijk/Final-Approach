@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Media;
 using GXPEngine;
@@ -31,6 +32,7 @@ class Level : GameObject
         spawnPlatform(new Vec2(-boundarySize, -boundarySize), borderWidth, borderLenght);
         spawnPlatform(new Vec2(boundarySize - 50, -boundarySize), borderWidth, borderLenght);
         spawnPlatform(new Vec2(-boundarySize, boundarySize - 50), borderLenght, borderWidth);
+        spawnCharacter();
 
         //After all lines have been added to the level they are found and assigned to the lines list
         _lines = FindObjectsOfType<LineSegment>();
@@ -87,7 +89,7 @@ class Level : GameObject
 
     public void spawnCharacter()
     {
-        cogwheel = new CogWheel(120, new Vec2(0, 0), 10);
+        cogwheel = new CogWheel(60, new Vec2(0, 0), 10);
         AddChild(cogwheel);
         _movers.Add(cogwheel);
     }
@@ -98,20 +100,6 @@ class Level : GameObject
         AddChild(platform);
         platform.AddLines();
     }
-
-    //public int GetNumberOfLines()
-    //{
-    //    return _lines.Count;
-    //}
-
-    //public LineSegment GetLine(int index)
-    //{
-    //    if (index >= 0 && index < _lines.Count)
-    //    {
-    //        return _lines[index];
-    //    }
-    //    return null;
-    //}
 
     public int GetNumberOfMovers()
     {

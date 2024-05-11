@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
+using System.Runtime.InteropServices.WindowsRuntime;
 using GXPEngine;
 using GXPEngine.Core;
 
@@ -17,6 +18,8 @@ class CogWheel: GameObject
     private float drag = 0.05f;
     private float characterMass = 40f;
     float bounciness = 0.98f;
+    float oldRotation = 0;
+
     bool firstTime = true;
     bool moving;
 
@@ -27,18 +30,18 @@ class CogWheel: GameObject
     private Vec2 velocity;
     Vec2 position;
     Vec2 _oldPosition;
-    private bool isFalling = true;
     public readonly int radius;
 
     /*    Sprite healthBar = new Sprite("sprite");
         Sprite healthBarFrame = new Sprite("sprite");*/
 
     AnimationSprite currentAnimation;
-    AnimationSprite idleAnimation = new AnimationSprite("Assets/placeholderPlayer.png", 8, 1);
+    AnimationSprite idleAnimation;
     EasyDraw Ball;
     //AnimationSprite takeDamageAnimation = new AnimationSprite("animation", 1, 1);
 
     public EState eState;
+    //Level level;
 
     public CogWheel(int pRadius, Vec2 pPosition, float health, bool pMoving = true) : base(true) 
     {
@@ -46,7 +49,7 @@ class CogWheel: GameObject
         position = pPosition;
         moving = pMoving;
 
-        UpdateScreenPosition();
+        idleAnimation = new AnimationSprite("Assets/placeholderPlayerFixed.png", 8, 1);
         idleAnimation.width = radius * 2;
         idleAnimation.height = radius * 2;
 
@@ -63,7 +66,7 @@ class CogWheel: GameObject
         idleAnimation.visible = false;
         AddChild(idleAnimation);
 
-        //scale = 0.1f;
+        UpdateScreenPosition();
     }
 
     void Update()
@@ -71,8 +74,6 @@ class CogWheel: GameObject
         Movement();
         Animation();
         Draw(230, 200, 0);
-        //idleAnimation.x = radius;
-        //idleAnimation.y = radius;
         //Console.WriteLine("Animation position: {0}, {1}", idleAnimation.x, idleAnimation.y);
         //Console.WriteLine("Ball position: {0}, {1}", Ball.x, Ball.y);
     }
@@ -81,6 +82,9 @@ class CogWheel: GameObject
     {
         x = position.x;
         y = position.y;
+
+        //idleAnimation.x = -radius;
+        //idleAnimation.y = -radius;
     }
 
     void Draw(byte red, byte green, byte blue)
@@ -95,13 +99,10 @@ class CogWheel: GameObject
         // Linecaps will be stationary which is why this exists.
         if (moving)
         {
-            //Here we need to figure out the physics behind the movement of the cog wheel
-            //Collision collision = MoveUntilCollision(0, velocity.y);
-            //isFalling = collision == null;
-
 
             if (firstTime) {
                 float deltaTime = Time.deltaTime / 1000f;
+                //ChangeGravity();
                 velocity += gravity * drag * characterMass * deltaTime;
             }
             else { firstTime = true; }
@@ -117,15 +118,15 @@ class CogWheel: GameObject
                     firstTime = false;
                 }
             }
-
+            rotation = -parent.rotation;
+            if (oldRotation != parent.rotation)
+            {
+                //position.SetAngleDegrees(-parent.rotation);
+                position.RotateDegrees(-parent.rotation + oldRotation);
+                oldRotation = parent.rotation;
+            }
+            else { ChangeGravity(); }
             UpdateScreenPosition();
-
-
-            //if (isFalling)
-            //{
-            //    float deltaTime = Time.deltaTime / 1000f;
-            //    velocity += gravity * drag * characterMass * deltaTime;
-            //}
         }
     }
 
@@ -166,7 +167,7 @@ class CogWheel: GameObject
 
     CollisionInfo FindEarliestCollision()
     {
-        // This allows the ball to use the parents (aka the level's) public methods.
+        //   This allows the ball to use the parents(aka the level's) public methods.
         Level level = (Level)parent;
         // Check other movers:			
         for (int i = 0; i < level.GetNumberOfMovers(); i++)
@@ -186,13 +187,9 @@ class CogWheel: GameObject
                 }
             }
         }
-        // TODO: Check Line segments using myGame.GetLine();
 
-        //for (int i = 0; i < level.GetNumberOfLines(); i++)
         foreach(LineSegment line in level._lines)
         {
-            //LineSegment line = level.GetLine(i);
-
             //b.1
             Vec2 differenceVectorMovement = position - _oldPosition;
 
@@ -215,7 +212,6 @@ class CogWheel: GameObject
                 float TOI = (b.Dot(new Vec2(-1, -1)) - Mathf.Sqrt(D)) / a.Dot(new Vec2(2, 2));
                 if (0 <= TOI && TOI < 1)
                 {
-                    Console.WriteLine("TOI Ball: {0}", TOI);
                     return TOI;
                 }
             }
@@ -280,6 +276,27 @@ class CogWheel: GameObject
             velocity.Reflect(unitNormal, bounciness);
         }
     }
+
+    static bool Approx(float a, float b, float epsilon = 0.000001f)
+    {
+        return Mathf.Abs(a - b) < epsilon;
+    }
+
+    void ChangeGravity()
+    {
+        if(Approx(parent.rotation, 0, 0.5f)) { gravity = new Vec2(0, 9.81f); }
+        if (Approx(parent.rotation, 180, 0.5f)) { gravity = new Vec2(0, -9.81f); }
+        if (Approx(parent.rotation, 90, 0.5f)) { gravity = new Vec2(9.81f, 0); }
+        if (Approx(parent.rotation, -90, 0.5f)) { gravity = new Vec2(-9.81f, 0); }
+        //Console.WriteLine("Gravity changed to: {0}", gravity);
+        //Console.WriteLine("Rotation: {0}", parent.rotation);
+    }
+
+    ////public void SetLevel(ObjectLevel pLevel)
+    ////{
+    ////    This allows the ball to use the parents(aka the level's) public methods.
+    ////    level = pLevel;
+    ////}
 
     /*    public void renderHealthBar(int offSetX, int offSetY)
         {
