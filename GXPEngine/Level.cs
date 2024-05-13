@@ -7,7 +7,7 @@ using GXPEngine;
 class Level : GameObject
 {
     float boundarySize;
-    float targetAngle = 0;
+    public float targetAngle { get; private set; }
     Vec2 position = new Vec2();
 
     int borderLenght = 585;
@@ -19,6 +19,7 @@ class Level : GameObject
     public readonly LineSegment[] _lines;
     public Level(Vec2 pPosition, int pBoundarySize) 
     {
+        targetAngle = 0;
         boundarySize = pBoundarySize;
         position = pPosition;
         x = position.x;
@@ -90,6 +91,7 @@ class Level : GameObject
     public void spawnCharacter()
     {
         cogwheel = new CogWheel(60, new Vec2(0, 0), 10);
+        cogwheel.SetLevel(this);
         AddChild(cogwheel);
         _movers.Add(cogwheel);
     }

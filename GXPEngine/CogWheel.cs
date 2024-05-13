@@ -41,7 +41,7 @@ class CogWheel: GameObject
     //AnimationSprite takeDamageAnimation = new AnimationSprite("animation", 1, 1);
 
     public EState eState;
-    //Level level;
+    Level level;
 
     public CogWheel(int pRadius, Vec2 pPosition, float health, bool pMoving = true) : base(true) 
     {
@@ -157,8 +157,8 @@ class CogWheel: GameObject
 
     CollisionInfo FindEarliestCollision()
     {
-        //   This allows the ball to use the parents(aka the level's) public methods.
-        Level level = (Level)parent;
+        //   This allows the ball to use the parent's(aka the level's) public methods.
+       // Level level = (Level)parent;
         // Check other movers:			
         for (int i = 0; i < level.GetNumberOfMovers(); i++)
         {
@@ -277,23 +277,35 @@ class CogWheel: GameObject
 
     void ChangeGravity()
     {
-        if(Approx(parent.rotation, 0, 0.5f)) { gravity = new Vec2(0, 9.81f); }
-        if (Approx(parent.rotation, 45, 0.5f)) { gravity = new Vec2(4.905f, 4.905f); }
-        if (Approx(parent.rotation, 90, 0.5f)) { gravity = new Vec2(9.81f, 0); }
-        if (Approx(parent.rotation, 135, 0.5f)) { gravity = new Vec2(4.905f, -4.905f); }
-        if (Approx(parent.rotation, 180, 0.5f)) { gravity = new Vec2(0, -9.81f); }
-        if (Approx(parent.rotation, -45, 0.5f)) { gravity = new Vec2(-4.905f, 4.905f); }
-        if (Approx(parent.rotation, -90, 0.5f)) { gravity = new Vec2(-9.81f, 0); }
-        if (Approx(parent.rotation, -135, 0.5f)) { gravity = new Vec2(-4.905f, -4.905f); }
+        //Before Rotation Gravity Change
+        if (level.targetAngle == 0) { gravity = new Vec2(0, 9.81f); }
+        //if (Approx(level.targetAngle, 45, 0.5f)) { gravity = new Vec2(4.905f, 4.905f); }
+        if (level.targetAngle == 90) { gravity = new Vec2(9.81f, 0); }
+        //if (Approx(level.targetAngle, 135, 0.5f)) { gravity = new Vec2(4.905f, -4.905f); }
+        if (level.targetAngle == 180) { gravity = new Vec2(0, -9.81f); }
+        //if (Approx(level.targetAngle, -45, 0.5f)) { gravity = new Vec2(-4.905f, 4.905f); }
+        if (level.targetAngle == -90) { gravity = new Vec2(-9.81f, 0); }
+        //if (Approx(level.targetAngle, -135, 0.5f)) { gravity = new Vec2(-4.905f, -4.905f); }
+
+
+        // After Rotation Gravity change
+        //if (Approx(parent.rotation, 0, 0.5f)) { gravity = new Vec2(0, 9.81f); }
+        //if (Approx(parent.rotation, 45, 0.5f)) { gravity = new Vec2(4.905f, 4.905f); }
+        //if (Approx(parent.rotation, 90, 0.5f)) { gravity = new Vec2(9.81f, 0); }
+        //if (Approx(parent.rotation, 135, 0.5f)) { gravity = new Vec2(4.905f, -4.905f); }
+        //if (Approx(parent.rotation, 180, 0.5f)) { gravity = new Vec2(0, -9.81f); }
+        //if (Approx(parent.rotation, -45, 0.5f)) { gravity = new Vec2(-4.905f, 4.905f); }
+        //if (Approx(parent.rotation, -90, 0.5f)) { gravity = new Vec2(-9.81f, 0); }
+        //if (Approx(parent.rotation, -135, 0.5f)) { gravity = new Vec2(-4.905f, -4.905f); }
         //Console.WriteLine("Gravity changed to: {0}", gravity);
         //Console.WriteLine("Rotation: {0}", parent.rotation);
     }
 
-    ////public void SetLevel(ObjectLevel pLevel)
-    ////{
-    ////    This allows the ball to use the parents(aka the level's) public methods.
-    ////    level = pLevel;
-    ////}
+    public void SetLevel(Level pLevel)
+    {
+        //This allows the ball to use the parents(aka the level's) public methods.
+        level = pLevel;
+    }
 
     /*    public void renderHealthBar(int offSetX, int offSetY)
         {
