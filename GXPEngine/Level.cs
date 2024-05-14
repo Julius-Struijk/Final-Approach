@@ -95,7 +95,7 @@ class Level : GameObject
 
     public void spawnCharacter()
     {
-        cogwheel = new CogWheel(60, new Vec2(100, 100), 10);
+        cogwheel = new CogWheel(60, new Vec2(100, 100), 3);
         cogwheel.SetLevel(this);
         AddChild(cogwheel);
         _movers.Add(cogwheel);
