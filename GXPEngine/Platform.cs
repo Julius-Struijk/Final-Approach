@@ -31,13 +31,14 @@ class Platform : Sprite
         SetOrigin(width / 2, height / 2);
         //x = pPosition.x + radiusWidth;
         //y = pPosition.y + radiusHeight;
+        
     }
 
     // Adding Lines Seperately from the rest of the platform so parent is assigned and the lines can be added there.
 
     public void AddLines()
     {
-        Console.WriteLine("Width: {0} Height: {1}", width, height);
+        //Console.WriteLine("Width: {0} Height: {1}", width, height);
         radiusWidth = width / 2;
         radiusHeight = height / 2;
 

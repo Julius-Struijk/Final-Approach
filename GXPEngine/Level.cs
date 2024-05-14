@@ -12,15 +12,15 @@ class Level : GameObject
     public float targetAngle { get; private set; }
     Vec2 position = new Vec2();
 
-    int borderLenght = 585;
-    int borderWidth = 35;
+    //int borderLenght = 585;
+    //int borderWidth = 35;
 
     CogWheel cogwheel;
-    Spikes spikes1;
-    Spikes spikes2;
-    Spikes spikes3;
+    //Spikes spikes1;
+    //Spikes spikes2;
+    //Spikes spikes3;
 
-    List<CogWheel> _movers;
+    public readonly CogWheel[] _movers;
     public readonly LineSegment[] _lines;
     public Level(Vec2 pPosition, string mapName) 
     {
@@ -31,24 +31,20 @@ class Level : GameObject
         // This is to prevent the bug where the rotation starts out wrong, since it's based off the position of the object which is the rotated the wrong way.
         position = new Vec2(1101, 26);
 
-        _movers = new List<CogWheel>();
-
         TiledLoader loader = new TiledLoader(mapName);
         loader.rootObject = this;
         //loader.LoadTileLayers(0);
         loader.autoInstance = true;
         loader.LoadObjectGroups(0);
         spawnPlatformLines();
+        spawnSpikeObjects();
 
-        //spawnPlatform(new Vec2(-boundarySize, -boundarySize), borderLenght, borderWidth);
-        //spawnPlatform(new Vec2(-boundarySize, -boundarySize), borderWidth, borderLenght);
-        //spawnPlatform(new Vec2(boundarySize - 50, -boundarySize), borderWidth, borderLenght);
-        //spawnPlatform(new Vec2(-boundarySize, boundarySize - 50), borderLenght, borderWidth);
-        spawnSpikes();
+        //spawnSpikes();
         spawnCharacter();
 
         //After all lines have been added to the level they are found and assigned to the lines list
         _lines = FindObjectsOfType<LineSegment>();
+        _movers = FindObjectsOfType<CogWheel>();
     }
 
     void RotateLevel()
@@ -105,20 +101,17 @@ class Level : GameObject
         cogwheel = new CogWheel(60, new Vec2(game.width / 2, game.height / 2), 10);
         cogwheel.SetLevel(this);
         AddChild(cogwheel);
-        _movers.Add(cogwheel);
     }
 
-    public void spawnSpikes()
+    void spawnSpikeObjects()
     {
-        spikes1 = new Spikes(new Vec2(0 - 250, 0), 32, 32);
-        spikes2 = new Spikes(new Vec2(0 - 218, 0), 32, 32);
-        spikes3 = new Spikes(new Vec2(0 - 186, 0), 32, 32);
-        AddChild(spikes1);
-        AddChild(spikes2);
-        AddChild(spikes3);
-        spikes1.addLines();
-        spikes2.addLines();
-        spikes3.addLines();
+        //spikes = new Spikes(new Vec2(0 - 250, 0), 32, 32);
+        //AddChild(spikes);
+        Spikes[] spikes = FindObjectsOfType<Spikes>();
+        foreach (Spikes spike in spikes)
+        {
+            spike.AddObjects();
+        }
     }
 
     void spawnPlatformLines()
@@ -130,19 +123,5 @@ class Level : GameObject
         {
             platform.AddLines();
         }
-    }
-
-    public int GetNumberOfMovers()
-    {
-        return _movers.Count;
-    }
-
-    public CogWheel GetMover(int index)
-    {
-        if (index >= 0 && index < _movers.Count)
-        {
-            return _movers[index];
-        }
-        return null;
     }
 }

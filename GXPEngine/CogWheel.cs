@@ -19,7 +19,7 @@ class CogWheel : GameObject
     private float drag = 0.05f;
     private float characterMass = 40f;
     float bounciness = 0.98f;
-    float oldRotation = 0;
+    //float oldRotation = 0;
 
     bool firstTime = true;
     bool moving;
@@ -29,7 +29,7 @@ class CogWheel : GameObject
 
     private Vec2 gravity = new Vec2(0, 9.81f);
     private Vec2 velocity;
-    Vec2 extraVelocity;
+    //Vec2 extraVelocity;
     Vec2 position;
     Vec2 _oldPosition;
     public readonly int radius;
@@ -183,9 +183,8 @@ class CogWheel : GameObject
         //   This allows the ball to use the parent's(aka the level's) public methods.
         // Level level = (Level)parent;
         // Check other movers:			
-        for (int i = 0; i < level.GetNumberOfMovers(); i++)
+        foreach(CogWheel mover in level._movers)
         {
-            CogWheel mover = level.GetMover(i);
             if (mover != this)
             {
                 Vec2 relativePosition = position - mover.position;
@@ -200,6 +199,7 @@ class CogWheel : GameObject
                 }
             }
         }
+
 
         foreach (LineSegment line in level._lines)
         {
