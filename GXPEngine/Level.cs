@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Media;
+using System.Security.AccessControl;
 using GXPEngine;
 using TiledMapParser;
 
@@ -14,7 +15,10 @@ class Level : GameObject
     int borderLenght = 585;
     int borderWidth = 35;
 
-    private CogWheel cogwheel;
+    CogWheel cogwheel;
+    Spikes spikes1;
+    Spikes spikes2;
+    Spikes spikes3;
 
     List<CogWheel> _movers;
     public readonly LineSegment[] _lines;
@@ -40,6 +44,7 @@ class Level : GameObject
         //spawnPlatform(new Vec2(-boundarySize, -boundarySize), borderWidth, borderLenght);
         //spawnPlatform(new Vec2(boundarySize - 50, -boundarySize), borderWidth, borderLenght);
         //spawnPlatform(new Vec2(-boundarySize, boundarySize - 50), borderLenght, borderWidth);
+        spawnSpikes();
         spawnCharacter();
 
         //After all lines have been added to the level they are found and assigned to the lines list
@@ -101,6 +106,19 @@ class Level : GameObject
         cogwheel.SetLevel(this);
         AddChild(cogwheel);
         _movers.Add(cogwheel);
+    }
+
+    public void spawnSpikes()
+    {
+        spikes1 = new Spikes(new Vec2(0 - 250, 0), 32, 32);
+        spikes2 = new Spikes(new Vec2(0 - 218, 0), 32, 32);
+        spikes3 = new Spikes(new Vec2(0 - 186, 0), 32, 32);
+        AddChild(spikes1);
+        AddChild(spikes2);
+        AddChild(spikes3);
+        spikes1.addLines();
+        spikes2.addLines();
+        spikes3.addLines();
     }
 
     void spawnPlatformLines()

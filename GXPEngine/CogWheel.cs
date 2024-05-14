@@ -12,7 +12,7 @@ public enum EState
     Idle,
     TakeDamage
 }
-class CogWheel: GameObject
+class CogWheel : GameObject
 {
     private float health;
     private float maxHealth;
@@ -34,8 +34,8 @@ class CogWheel: GameObject
     Vec2 _oldPosition;
     public readonly int radius;
 
-    /*    Sprite healthBar = new Sprite("sprite");
-        Sprite healthBarFrame = new Sprite("sprite");*/
+    Sprite heartEmpty = new Sprite("Assets/heartEmpty.png");
+    Sprite heartFull = new Sprite("Assets/heartFull.png");
 
     AnimationSprite currentAnimation;
     AnimationSprite idleAnimation;
@@ -106,7 +106,8 @@ class CogWheel: GameObject
         if (moving)
         {
 
-            if (firstTime) {
+            if (firstTime)
+            {
                 float deltaTime = Time.deltaTime / 1000f;
                 velocity += gravity * drag * characterMass * deltaTime;
                 //if(extraVelocity.x == 0 && extraVelocity.y == 0) { extraVelocity = velocity; }
@@ -170,6 +171,7 @@ class CogWheel: GameObject
             {
                 frame = 0;
             }
+
             currentAnimation.SetFrame(frame);
             frame++;
         }
@@ -179,7 +181,7 @@ class CogWheel: GameObject
     CollisionInfo FindEarliestCollision()
     {
         //   This allows the ball to use the parent's(aka the level's) public methods.
-       // Level level = (Level)parent;
+        // Level level = (Level)parent;
         // Check other movers:			
         for (int i = 0; i < level.GetNumberOfMovers(); i++)
         {
@@ -199,7 +201,7 @@ class CogWheel: GameObject
             }
         }
 
-        foreach(LineSegment line in level._lines)
+        foreach (LineSegment line in level._lines)
         {
             //b.1
             Vec2 differenceVectorMovement = position - _oldPosition;
@@ -273,17 +275,25 @@ class CogWheel: GameObject
 
     void ResolveCollision(CollisionInfo col)
     {
-        if(col.other is CogWheel)
+        if (col.other is CogWheel)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normalized();
             velocity.Reflect(unitNormal, bounciness);
-        } else if(col.other is BouncyWall wall)
+        }
+        else if (col.other is BouncyWall wall)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normal();
             velocity.Reflect(unitNormal, wall.bounciness);
-        } else if(col.other is LineSegment)
+        }
+        else if (col.other is SpikeWall spikeWall)
+        {
+            position += velocity * col.timeOfImpact;
+            Vec2 unitNormal = col.normal.Normal();
+            velocity.Reflect(unitNormal, spikeWall.bounciness);
+        }
+        else if (col.other is LineSegment)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normal();
