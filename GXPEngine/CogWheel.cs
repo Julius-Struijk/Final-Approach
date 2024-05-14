@@ -34,7 +34,7 @@ class CogWheel : GameObject
     Vec2 _oldPosition;
     public readonly int radius;
 
-    Sprite heartEmpty = new Sprite("Assets/heartEmpty.png");
+    Sprite heartEmpty;
     Sprite heartFull = new Sprite("Assets/heartFull.png");
 
     AnimationSprite currentAnimation;
@@ -89,6 +89,7 @@ class CogWheel : GameObject
     {
         Movement();
         Animation();
+        //renderHealthBar();
     }
 
     void UpdateScreenPosition()
@@ -338,19 +339,9 @@ class CogWheel : GameObject
         level = pLevel;
     }
 
-    /*    public void renderHealthBar(int offSetX, int offSetY)
-        {
-            if (!this.game.HasChild(healthBarFrame)) { this.game.AddChild(healthBarFrame); }
-            if (!this.game.HasChild(healthBar)) { this.game.AddChild(healthBar); }
+    public void UpdateHealth()
+    {
 
-            healthBarFrame.scale = 0.20f;
-            healthBarFrame.SetXY(this.x + offSetX, this.y - offSetY);
 
-            float healthFraction = health / maxHealth;
-            healthBar.scaleX = Mathf.Max(0f, healthFraction * 0.2f);
-            healthBar.scaleY = 0.20f;
-
-            healthBar.SetXY(this.x + offSetX + 4, this.y - offSetY + 3);
-
-        }*/
+    }
 }
