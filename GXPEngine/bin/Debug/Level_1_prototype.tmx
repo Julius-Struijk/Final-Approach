@@ -51,12 +51,12 @@
 </data>
  </layer>
  <objectgroup id="2" name="Objects" offsetx="-46.6667" offsety="-16.6667">
-  <object id="9" name="Top Boundary" type="Platform" x="745.523" y="397.212" width="457.204" height="79.4433"/>
-  <object id="10" name="Right Boundary" type="Platform" x="1127.61" y="478.547" width="71.3368" height="304.262"/>
-  <object id="11" name="Left Boundary" type="Platform" x="747.685" y="478.547" width="71.3368" height="304.263"/>
-  <object id="12" name="Bottom Boundary" type="Platform" x="744.983" y="782.269" width="457.204" height="79.4433"/>
-  <object id="18" name="Spike 2" type="Spikes" gid="11" x="1124.65" y="782.333" width="66.7023" height="34" rotation="-90"/>
-  <object id="19" name="Spike 3" type="Spikes" gid="11" x="861.316" y="783" width="66.7023" height="34"/>
-  <object id="20" name="Spike 1" type="Spikes" gid="11" x="821.092" y="481.667" width="61.4707" height="31.3333" rotation="90"/>
+  <object id="9" name="Top Boundary" type="Platform" x="735.523" y="351.212" width="457.204" height="79.4433"/>
+  <object id="10" name="Right Boundary" type="Platform" x="1117.61" y="432.547" width="71.3368" height="304.262"/>
+  <object id="11" name="Left Boundary" type="Platform" x="737.685" y="432.547" width="71.3368" height="304.263"/>
+  <object id="12" name="Bottom Boundary" type="Platform" x="734.983" y="736.269" width="457.204" height="79.4433"/>
+  <object id="18" name="Spike 2" type="Spikes" gid="11" x="1114.65" y="736.333" width="66.7023" height="34" rotation="-90"/>
+  <object id="19" name="Spike 3" type="Spikes" gid="11" x="851.316" y="737" width="66.7023" height="34"/>
+  <object id="20" name="Spike 1" type="Spikes" gid="11" x="811.092" y="435.667" width="61.4707" height="31.3333" rotation="90"/>
  </objectgroup>
 </map>

@@ -34,7 +34,7 @@ public class MyGame : Game {
             level = null;
         }
 
-        level = new Level(new Vec2(0, 0), "Level_1_prototype.tmx");
+        level = new Level(new Vec2(width / 2, height / 2), "Level_1_prototype.tmx");
         AddChild(level);
     }
 
