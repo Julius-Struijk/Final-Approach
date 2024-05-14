@@ -149,6 +149,7 @@ class CogWheel: GameObject
             {
                 frame = 0;
             }
+            
             currentAnimation.SetFrame(frame);
             frame++;
         }

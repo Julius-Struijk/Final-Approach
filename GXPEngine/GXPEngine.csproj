@@ -90,6 +90,7 @@
     <Compile Include="PanoramaManager.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="SoundManager.cs" />
+    <Compile Include="Spikes.cs" />
     <Compile Include="Vec2.cs" />
   </ItemGroup>
   <ItemGroup>
