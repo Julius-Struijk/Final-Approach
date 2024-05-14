@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
@@ -14,8 +15,8 @@ public enum EState
 }
 class CogWheel : GameObject
 {
-    private float health;
-    private float maxHealth;
+    private int health;
+    private int maxHealth;
     private float drag = 0.05f;
     private float characterMass = 40f;
     float bounciness = 0.98f;
@@ -23,6 +24,7 @@ class CogWheel : GameObject
 
     bool firstTime = true;
     bool moving;
+    public bool takeDamage = false;
 
     int counter;
     int frame;
@@ -34,8 +36,9 @@ class CogWheel : GameObject
     Vec2 _oldPosition;
     public readonly int radius;
 
-    Sprite heartEmpty;
-    Sprite heartFull = new Sprite("Assets/heartFull.png");
+    private Sprite heartEmpty;
+    private Sprite heartFull;
+
 
     AnimationSprite currentAnimation;
     AnimationSprite idleAnimation;
@@ -44,7 +47,10 @@ class CogWheel : GameObject
     public EState eState;
     Level level;
 
-    public CogWheel(int pRadius, Vec2 pPosition, float health, bool pMoving = true) : base(true)
+    private List<Sprite> fullHearts = new List<Sprite>();
+    private List<Sprite> emptyHearts = new List<Sprite>();
+
+    public CogWheel(int pRadius, Vec2 pPosition, int health, bool pMoving = true) : base(true)
     {
         radius = pRadius;
         position = pPosition;
@@ -61,8 +67,23 @@ class CogWheel : GameObject
 
         idleAnimation.visible = false;
         AddChild(idleAnimation);
-
         UpdateScreenPosition();
+
+        for (int i = 0; i < maxHealth; i++)
+        {
+            heartEmpty = new Sprite("Assets/heartEmpty.png");
+            game.AddChild(heartEmpty);
+            emptyHearts.Add(heartEmpty);
+            heartEmpty.scale = 0.2f;
+            heartEmpty.SetXY(1600 + 100 * i, 25);
+            heartEmpty.visible = false;
+            heartFull = new Sprite("Assets/heartFull.png");
+            game.AddChild(heartFull);
+            fullHearts.Add(heartFull);
+            heartFull.scale = 0.2f;
+            heartFull.SetXY(1600 + 100 * i, 25);
+            heartFull.visible = false;
+        }
     }
 
     //public CogWheel(string filename, int colls, int rows, TiledObject obj = null) : base(filename, colls, rows)
@@ -89,7 +110,14 @@ class CogWheel : GameObject
     {
         Movement();
         Animation();
-        //renderHealthBar();
+        UpdateHearts();
+        UpdateHearts();
+
+        if(Input.GetKeyUp(Key.M))
+        {
+            takeDamage = true;
+            Console.WriteLine("damaged");
+        }
     }
 
     void UpdateScreenPosition()
@@ -104,16 +132,15 @@ class CogWheel : GameObject
     void Movement()
     {
         // Linecaps will be stationary which is why this exists.
-        if (moving)
+        if(moving)
         {
 
-            if (firstTime)
+            if(firstTime)
             {
                 float deltaTime = Time.deltaTime / 1000f;
                 velocity += gravity * drag * characterMass * deltaTime;
                 //if(extraVelocity.x == 0 && extraVelocity.y == 0) { extraVelocity = velocity; }
-            }
-            else { firstTime = true; }
+            } else { firstTime = true; }
             _oldPosition = position;
 
             rotation = -parent.rotation;
@@ -131,10 +158,10 @@ class CogWheel : GameObject
             position += velocity;
 
             CollisionInfo firstCollision = FindEarliestCollision();
-            if (firstCollision != null)
+            if(firstCollision != null)
             {
                 ResolveCollision(firstCollision);
-                if (firstCollision.timeOfImpact == 0 && firstTime)
+                if(firstCollision.timeOfImpact == 0 && firstTime)
                 {
                     firstTime = false;
                 }
@@ -146,7 +173,7 @@ class CogWheel : GameObject
     void Animation()
     {
         AnimationSprite previousAnimation = currentAnimation;
-        switch (eState)
+        switch(eState)
         {
             case EState.Idle:
                 currentAnimation = idleAnimation;
@@ -155,9 +182,9 @@ class CogWheel : GameObject
                 throw new ArgumentOutOfRangeException();
         }
 
-        if (currentAnimation != previousAnimation)
+        if(currentAnimation != previousAnimation)
         {
-            if (previousAnimation != null)
+            if(previousAnimation != null)
             {
                 previousAnimation.visible = false;
             }
@@ -165,10 +192,10 @@ class CogWheel : GameObject
             currentAnimation.visible = true;
         }
 
-        if (counter >= 6)
+        if(counter >= 6)
         {
             counter = 0;
-            if (frame >= currentAnimation.frameCount)
+            if(frame >= currentAnimation.frameCount)
             {
                 frame = 0;
             }
@@ -194,7 +221,7 @@ class CogWheel : GameObject
                 Vec2 b = new Vec2(2 * (relativePosition.Dot(velocity)));
                 Vec2 c = new Vec2(relativePosition.Dot(relativePosition) - (radius + mover.radius) * (radius + mover.radius));
                 float TOI = CalculateTOIBall(a, b, c);
-                if (TOI != 0)
+                if(TOI != 0)
                 {
                     return new CollisionInfo(relativePosition, mover, TOI);
                 }
@@ -208,7 +235,7 @@ class CogWheel : GameObject
             Vec2 differenceVectorMovement = position - _oldPosition;
 
             float TOI = CalculateTOILine(line, differenceVectorMovement);
-            if (TOI != -2)
+            if(TOI != -2)
             {
                 return new CollisionInfo((line.end - line.start), line, TOI);
             }
@@ -218,13 +245,13 @@ class CogWheel : GameObject
 
     float CalculateTOIBall(Vec2 a, Vec2 b, Vec2 c)
     {
-        if (a.x != 0)
+        if(a.x != 0)
         {
             float D = b.Dot(b) - 4 * a.Dot(c);
-            if (D >= 0)
+            if(D >= 0)
             {
                 float TOI = (b.Dot(new Vec2(-1, -1)) - Mathf.Sqrt(D)) / a.Dot(new Vec2(2, 2));
-                if (0 <= TOI && TOI < 1)
+                if(0 <= TOI && TOI < 1)
                 {
                     return TOI;
                 }
@@ -242,29 +269,27 @@ class CogWheel : GameObject
         //a
         Vec2 differenceVector = new Vec2(position.x - line.start.x, position.y - line.start.y);
         float ballDistance = differenceVector.Dot((line.end - line.start).Normal()) - radius;
-        if (movementDistance > 0)
+        if(movementDistance > 0)
         {
             // Magic impossible number, so the value is assigned for the if check later.
             float TOI = 2;
-            if (ballDistance >= 0)
+            if(ballDistance >= 0)
             {
                 //t
                 TOI = ballDistance / movementDistance;
-            }
-            else if (ballDistance >= -radius)
+            } else if(ballDistance >= -radius)
             {
                 //t
                 TOI = 0;
-            }
-            else { return -2; }
+            } else { return -2; }
 
-            if (TOI <= 1)
+            if(TOI <= 1)
             {
                 Vec2 POI = position + TOI * velocity;
                 //d
                 Vec2 differenceVectorPOI = new Vec2(POI.x - line.start.x, POI.y - line.start.y);
                 float lineDistance = differenceVectorPOI.Dot((line.end - line.start).Normalized());
-                if (lineDistance >= 0 && lineDistance <= (line.end - line.start).Length())
+                if(lineDistance >= 0 && lineDistance <= (line.end - line.start).Length())
                 {
                     return TOI;
                 }
@@ -276,25 +301,22 @@ class CogWheel : GameObject
 
     void ResolveCollision(CollisionInfo col)
     {
-        if (col.other is CogWheel)
+        if(col.other is CogWheel)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normalized();
             velocity.Reflect(unitNormal, bounciness);
-        }
-        else if (col.other is BouncyWall wall)
+        } else if(col.other is BouncyWall wall)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normal();
             velocity.Reflect(unitNormal, wall.bounciness);
-        }
-        else if (col.other is SpikeWall spikeWall)
+        } else if(col.other is SpikeWall spikeWall)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normal();
             velocity.Reflect(unitNormal, spikeWall.bounciness);
-        }
-        else if (col.other is LineSegment)
+        } else if(col.other is LineSegment)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normal();
@@ -310,13 +332,13 @@ class CogWheel : GameObject
     void ChangeGravity()
     {
         //Before Rotation Gravity Change
-        if (level.targetAngle == 0) { gravity = new Vec2(0, 9.81f); }
+        if(level.targetAngle == 0) { gravity = new Vec2(0, 9.81f); }
         //if (Approx(level.targetAngle, 45, 0.5f)) { gravity = new Vec2(4.905f, 4.905f); }
-        if (level.targetAngle == 90) { gravity = new Vec2(9.81f, 0); }
+        if(level.targetAngle == 90) { gravity = new Vec2(9.81f, 0); }
         //if (Approx(level.targetAngle, 135, 0.5f)) { gravity = new Vec2(4.905f, -4.905f); }
-        if (level.targetAngle == 180) { gravity = new Vec2(0, -9.81f); }
+        if(level.targetAngle == 180) { gravity = new Vec2(0, -9.81f); }
         //if (Approx(level.targetAngle, -45, 0.5f)) { gravity = new Vec2(-4.905f, 4.905f); }
-        if (level.targetAngle == -90) { gravity = new Vec2(-9.81f, 0); }
+        if(level.targetAngle == -90) { gravity = new Vec2(-9.81f, 0); }
         //if (Approx(level.targetAngle, -135, 0.5f)) { gravity = new Vec2(-4.905f, -4.905f); }
 
 
@@ -339,9 +361,23 @@ class CogWheel : GameObject
         level = pLevel;
     }
 
-    public void UpdateHealth()
+    private void UpdateHearts()
     {
+        int remainingHealth = health - 1;
+        for(int i = 0; i < maxHealth; i++)
+        {
+            fullHearts[i].visible = i <= remainingHealth;
+        }
 
+        for(int i = emptyHearts.Count - 1; i >= 0; i--)
+        {
+            emptyHearts[i].visible = i > remainingHealth;
+        }
 
+        if (takeDamage)
+        {
+            health--;
+            takeDamage = false;
+        }
     }
 }
