@@ -111,7 +111,6 @@ class CogWheel : GameObject
         Movement();
         Animation();
         UpdateHearts();
-        UpdateHearts();
 
         if(Input.GetKeyUp(Key.M))
         {
@@ -316,6 +315,8 @@ class CogWheel : GameObject
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normal();
             velocity.Reflect(unitNormal, spikeWall.bounciness);
+            takeDamage = true;
+            Console.WriteLine("Taking damage");
         } else if(col.other is LineSegment)
         {
             position += velocity * col.timeOfImpact;
