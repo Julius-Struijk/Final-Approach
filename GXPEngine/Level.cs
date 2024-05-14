@@ -8,7 +8,6 @@ using TiledMapParser;
 
 class Level : GameObject
 {
-    float boundarySize;
     public float targetAngle { get; private set; }
     Vec2 position = new Vec2();
 
@@ -22,7 +21,7 @@ class Level : GameObject
 
     public readonly CogWheel[] _movers;
     public readonly LineSegment[] _lines;
-    public Level(Vec2 pPosition, string mapName) 
+    public Level(Vec2 pPosition, string mapName)
     {
         targetAngle = 0;
         position = pPosition;
@@ -98,7 +97,7 @@ class Level : GameObject
 
     public void spawnCharacter()
     {
-        cogwheel = new CogWheel(60, new Vec2(game.width / 2, game.height / 2), 3);
+        cogwheel = new CogWheel(30, new Vec2(game.width / 2, game.height / 2), 3);
         cogwheel.SetLevel(this);
         AddChild(cogwheel);
     }

@@ -38,9 +38,9 @@ class Platform : Sprite
 
     public void AddLines()
     {
-        //Console.WriteLine("Width: {0} Height: {1}", width, height);
         radiusWidth = width / 2;
         radiusHeight = height / 2;
+
 
         Top = new LineSegment(new Vec2(x + radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y - radiusHeight), 0xff00ff00, 3);
         parent.AddChild(Top);
