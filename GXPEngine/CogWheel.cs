@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using GXPEngine;
 using GXPEngine.Core;
+using TiledMapParser;
 
 public enum EState
 {
@@ -63,6 +64,26 @@ class CogWheel : GameObject
 
         UpdateScreenPosition();
     }
+
+    //public CogWheel(string filename, int colls, int rows, TiledObject obj = null) : base(filename, colls, rows)
+    //{
+    //    radius = pRadius;
+    //    position = new Vec2(x, y);
+    //    moving = pMoving;
+
+    //    idleAnimation = new AnimationSprite("Assets/placeholderPlayerNoSpace.png", 8, 1);
+    //    SetOrigin(width / 2, height / 2);
+
+    //    this.health = health;
+    //    this.maxHealth = health;
+
+    //    eState = EState.Idle;
+
+    //    idleAnimation.visible = false;
+    //    AddChild(idleAnimation);
+
+    //    UpdateScreenPosition();
+    //}
 
     void Update()
     {
