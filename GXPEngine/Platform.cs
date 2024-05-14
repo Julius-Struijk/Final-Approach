@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GXPEngine;
+using TiledMapParser;
 
 class Platform : Sprite
 {
@@ -14,20 +15,31 @@ class Platform : Sprite
 
     float radiusWidth;
     float radiusHeight;
-    public Platform(Vec2 pPosition, int pWidth, int pHeight) : base("Assets/greenButton.png")
+    //public Platform(Vec2 pPosition, int pWidth, int pHeight) : base("Assets/greenButton.png")
+    //{
+    //    SetOrigin(width / 2, height / 2);
+    //    width = pWidth;
+    //    radiusWidth = width / 2;
+    //    height = pHeight;
+    //    radiusHeight = height / 2;
+    //    x = pPosition.x + radiusWidth;
+    //    y = pPosition.y + radiusHeight;
+    //}
+
+    public Platform(TiledObject obj=null) : base("Assets/greenButton.png")
     {
         SetOrigin(width / 2, height / 2);
-        width = pWidth;
-        radiusWidth = width / 2;
-        height = pHeight;
-        radiusHeight = height / 2;
-        x = pPosition.x + radiusWidth;
-        y = pPosition.y + radiusHeight;
+        //x = pPosition.x + radiusWidth;
+        //y = pPosition.y + radiusHeight;
     }
+
     // Adding Lines Seperately from the rest of the platform so parent is assigned and the lines can be added there.
 
     public void AddLines()
     {
+        Console.WriteLine("Width: {0} Height: {1}", width, height);
+        radiusWidth = width / 2;
+        radiusHeight = height / 2;
 
         Top = new LineSegment(new Vec2(x + radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y - radiusHeight), 0xff00ff00, 3);
         parent.AddChild(Top);

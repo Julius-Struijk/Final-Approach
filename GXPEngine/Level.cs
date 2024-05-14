@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Media;
 using GXPEngine;
+using TiledMapParser;
 
 class Level : GameObject
 {
@@ -17,10 +18,9 @@ class Level : GameObject
 
     List<CogWheel> _movers;
     public readonly LineSegment[] _lines;
-    public Level(Vec2 pPosition, int pBoundarySize) 
+    public Level(Vec2 pPosition, string mapName) 
     {
         targetAngle = 0;
-        boundarySize = pBoundarySize;
         position = pPosition;
         x = position.x;
         y = position.y;
@@ -29,10 +29,17 @@ class Level : GameObject
 
         _movers = new List<CogWheel>();
 
-        spawnPlatform(new Vec2(-boundarySize, -boundarySize), borderLenght, borderWidth);
-        spawnPlatform(new Vec2(-boundarySize, -boundarySize), borderWidth, borderLenght);
-        spawnPlatform(new Vec2(boundarySize - 50, -boundarySize), borderWidth, borderLenght);
-        spawnPlatform(new Vec2(-boundarySize, boundarySize - 50), borderLenght, borderWidth);
+        TiledLoader loader = new TiledLoader(mapName);
+        loader.rootObject = this;
+        //loader.LoadTileLayers(0);
+        loader.autoInstance = true;
+        loader.LoadObjectGroups(0);
+        spawnPlatformLines();
+
+        //spawnPlatform(new Vec2(-boundarySize, -boundarySize), borderLenght, borderWidth);
+        //spawnPlatform(new Vec2(-boundarySize, -boundarySize), borderWidth, borderLenght);
+        //spawnPlatform(new Vec2(boundarySize - 50, -boundarySize), borderWidth, borderLenght);
+        //spawnPlatform(new Vec2(-boundarySize, boundarySize - 50), borderLenght, borderWidth);
         spawnCharacter();
 
         //After all lines have been added to the level they are found and assigned to the lines list
@@ -90,17 +97,21 @@ class Level : GameObject
 
     public void spawnCharacter()
     {
-        cogwheel = new CogWheel(60, new Vec2(0, 0), 10);
+        cogwheel = new CogWheel(60, new Vec2(game.width / 2, game.height / 2), 10);
         cogwheel.SetLevel(this);
         AddChild(cogwheel);
         _movers.Add(cogwheel);
     }
 
-    void spawnPlatform(Vec2 pPosition, int pWidth, int pHeight)
+    void spawnPlatformLines()
     {
-        Platform platform = new Platform(pPosition, pWidth, pHeight);
-        AddChild(platform);
-        platform.AddLines();
+        //Platform platform = new Platform(pPosition, pWidth, pHeight);
+        //AddChild(platform);
+        Platform[] platforms = FindObjectsOfType<Platform>();
+        foreach (Platform platform in platforms)
+        {
+            platform.AddLines();
+        }
     }
 
     public int GetNumberOfMovers()
