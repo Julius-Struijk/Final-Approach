@@ -1,20 +1,44 @@
-﻿namespace GXPEngine
-{
-    public class Spikes : LineSegment
-    {
-        public float bounciness = 0.5f;
-        public float damage;
+﻿using GXPEngine.Managers;
 
-        public Spikes(float pStartX, float pStartY, float pEndX, float pEndY, float bounciness, float damage, uint pColor = 4294967295, uint pLineWidth = 1) : base(pStartX, pStartY, pEndX, pEndY, pColor, pLineWidth)
+namespace GXPEngine
+{
+    public class Spikes : Sprite
+    {
+        Vec2 position;
+
+        LineSegment Top;
+        LineSegment Bottom;
+        LineSegment Left;
+        LineSegment Right;
+
+        float radiusWidth;
+        float radiusHeight;
+
+        public Spikes(Vec2 pPosition, int pWidth, int pHeight) : base("Assets/test.png")
         {
-            this.bounciness = bounciness;
-            this.damage = damage;
+            this.position = position;
+            SetOrigin(width / 2, height / 2);
+            width = pWidth;
+            radiusWidth = width / 2;
+            height = pHeight;
+            radiusHeight = height / 2;
+            x = pPosition.x + radiusWidth;
+            y = pPosition.y + radiusHeight;
         }
 
-        public Spikes(Vec2 pStart, Vec2 pEnd, float bounciness, float damage, uint pColor = 4294967295, uint pLineWidth = 1) : base(pStart, pEnd, pColor, pLineWidth)
+        public void addLines()
         {
-            this.bounciness = bounciness;
-            this.damage = damage;
+            Top = new SpikeWall(new Vec2(x + radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y - radiusHeight), 0.2f, 0xff00ff00, 3);
+            parent.AddChild(Top);
+
+            Bottom = new SpikeWall(new Vec2(x - radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y + radiusHeight), 0.2f, 0xff00ff00, 3);
+            parent.AddChild(Bottom);
+
+            Left = new SpikeWall(new Vec2(x - radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y + radiusHeight), 0.2f, 0xff00ff00, 3);
+            parent.AddChild(Left);
+
+            Right = new SpikeWall(new Vec2(x + radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y - radiusHeight), 0.2f, 0xff00ff00, 3);
+            parent.AddChild(Right);
         }
     }
 }

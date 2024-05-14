@@ -91,6 +91,7 @@
     <Compile Include="Platform.cs" />
     <Compile Include="SoundManager.cs" />
     <Compile Include="Spikes.cs" />
+    <Compile Include="SpikeWall.cs" />
     <Compile Include="Vec2.cs" />
   </ItemGroup>
   <ItemGroup>
