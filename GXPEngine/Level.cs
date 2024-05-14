@@ -104,8 +104,6 @@ class Level : GameObject
 
     void spawnSpikeObjects()
     {
-        //spikes = new Spikes(new Vec2(0 - 250, 0), 32, 32);
-        //AddChild(spikes);
         Spikes[] spikes = FindObjectsOfType<Spikes>();
         foreach (Spikes spike in spikes)
         {

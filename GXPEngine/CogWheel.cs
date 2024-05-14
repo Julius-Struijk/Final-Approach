@@ -305,6 +305,7 @@ class CogWheel : GameObject
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normalized();
             velocity.Reflect(unitNormal, bounciness);
+            takeDamage = true;
         } else if(col.other is BouncyWall wall)
         {
             position += velocity * col.timeOfImpact;
