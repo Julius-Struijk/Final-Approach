@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
@@ -13,7 +14,7 @@ public enum EState
     Idle,
     TakeDamage
 }
-class CogWheel : GameObject
+class CogWheel : AnimationSprite
 {
     private int health;
     private int maxHealth;
@@ -35,6 +36,7 @@ class CogWheel : GameObject
     Vec2 position;
     Vec2 _oldPosition;
     public readonly int radius;
+    int tiledSpriteRadius;
 
     private Sprite heartEmpty;
     private Sprite heartFull;
@@ -50,11 +52,13 @@ class CogWheel : GameObject
     private List<Sprite> fullHearts = new List<Sprite>();
     private List<Sprite> emptyHearts = new List<Sprite>();
 
-    public CogWheel(int pRadius, Vec2 pPosition, int health, bool pMoving = true) : base(true)
+    // This constructor is used by line caps.
+    public CogWheel(int pRadius, Vec2 pPosition, int health, bool pMoving = true) : base("Assets/placeholderPlayerNoSpace.png", 8, 1)
     {
         radius = pRadius;
         position = pPosition;
         moving = pMoving;
+        alpha = 0;
 
         idleAnimation = new AnimationSprite("Assets/placeholderPlayerNoSpace.png", 8, 1);
         idleAnimation.width = radius * 2;
@@ -86,25 +90,58 @@ class CogWheel : GameObject
         }
     }
 
-    //public CogWheel(string filename, int colls, int rows, TiledObject obj = null) : base(filename, colls, rows)
-    //{
-    //    radius = pRadius;
-    //    position = new Vec2(x, y);
-    //    moving = pMoving;
+    // This constructor is used for balls in Tiled.
+    public CogWheel(string filename, int colls, int rows, TiledObject obj = null) : base(filename, colls, rows)
+    {
 
-    //    idleAnimation = new AnimationSprite("Assets/placeholderPlayerNoSpace.png", 8, 1);
-    //    SetOrigin(width / 2, height / 2);
+        if (obj != null)
+        {
+            // Default values are used for line caps.
+            moving = obj.GetBoolProperty("moving", false);
+            health = obj.GetIntProperty("health", 0);
+            // The width of the object uses the full width of the sprite instead of the width put in Tiled when initializing for some reason, so I set it seperately.
+            radius = obj.GetIntProperty("radius", 0);
+        }
 
-    //    this.health = health;
-    //    this.maxHealth = health;
+        position = new Vec2(x, y);
 
-    //    eState = EState.Idle;
+        //Makes the main Animation invisible which preserves the system you had in place previously.
+        alpha = 0;
 
-    //    idleAnimation.visible = false;
-    //    AddChild(idleAnimation);
+        SetOrigin(radius / 2, radius / 2);
 
-    //    UpdateScreenPosition();
-    //}
+        this.maxHealth = health;
+
+        eState = EState.Idle;
+
+        idleAnimation = new AnimationSprite("Assets/placeholderPlayerNoSpace.png", 8, 1);
+
+        // For some reason the size and offset of the animation does need the width of the actual sprite instead of the regular width. But this only happens in Tiled, not through GXP.
+        tiledSpriteRadius = width;
+        idleAnimation.width = tiledSpriteRadius * 2;
+        idleAnimation.height = tiledSpriteRadius * 2;
+
+        idleAnimation.visible = false;
+        AddChild(idleAnimation);
+
+        UpdateScreenPosition();
+
+        for (int i = 0; i < maxHealth; i++)
+        {
+            heartEmpty = new Sprite("Assets/heartEmpty.png");
+            game.AddChild(heartEmpty);
+            emptyHearts.Add(heartEmpty);
+            heartEmpty.scale = 0.2f;
+            heartEmpty.SetXY(1600 + 100 * i, 25);
+            heartEmpty.visible = false;
+            heartFull = new Sprite("Assets/heartFull.png");
+            game.AddChild(heartFull);
+            fullHearts.Add(heartFull);
+            heartFull.scale = 0.2f;
+            heartFull.SetXY(1600 + 100 * i, 25);
+            heartFull.visible = false;
+        }
+    }
 
     void Update()
     {
@@ -124,8 +161,8 @@ class CogWheel : GameObject
         x = position.x;
         y = position.y;
 
-        idleAnimation.x = -radius;
-        idleAnimation.y = -radius;
+        idleAnimation.x = -tiledSpriteRadius;
+        idleAnimation.y = -tiledSpriteRadius;
     }
 
     void Movement()
@@ -133,6 +170,7 @@ class CogWheel : GameObject
         // Linecaps will be stationary which is why this exists.
         if(moving)
         {
+            level = (Level)parent;
 
             if(firstTime)
             {
@@ -207,8 +245,6 @@ class CogWheel : GameObject
 
     CollisionInfo FindEarliestCollision()
     {
-        //   This allows the ball to use the parent's(aka the level's) public methods.
-        // Level level = (Level)parent;
         // Check other movers:			
         foreach(CogWheel mover in level._movers)
         {
@@ -355,12 +391,6 @@ class CogWheel : GameObject
         //if (Approx(parent.rotation, -135, 0.5f)) { gravity = new Vec2(-4.905f, -4.905f); }
         //Console.WriteLine("Gravity changed to: {0}", gravity);
         //Console.WriteLine("Rotation: {0}", parent.rotation);
-    }
-
-    public void SetLevel(Level pLevel)
-    {
-        //This allows the ball to use the parents(aka the level's) public methods.
-        level = pLevel;
     }
 
     private void UpdateHearts()

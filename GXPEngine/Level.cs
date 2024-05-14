@@ -11,14 +11,6 @@ class Level : GameObject
     public float targetAngle { get; private set; }
     Vec2 position = new Vec2();
 
-    //int borderLenght = 585;
-    //int borderWidth = 35;
-
-    CogWheel cogwheel;
-    //Spikes spikes1;
-    //Spikes spikes2;
-    //Spikes spikes3;
-
     public readonly CogWheel[] _movers;
     public readonly LineSegment[] _lines;
     public Level(Vec2 pPosition, string mapName)
@@ -35,11 +27,11 @@ class Level : GameObject
         //loader.LoadTileLayers(0);
         loader.autoInstance = true;
         loader.LoadObjectGroups(0);
+
         spawnPlatformLines();
         spawnSpikeObjects();
 
         //spawnSpikes();
-        spawnCharacter();
 
         //After all lines have been added to the level they are found and assigned to the lines list
         _lines = FindObjectsOfType<LineSegment>();
@@ -93,13 +85,6 @@ class Level : GameObject
         //{
         //    RotateLevel();
         //}
-    }
-
-    public void spawnCharacter()
-    {
-        cogwheel = new CogWheel(30, new Vec2(0, 0), 3);
-        cogwheel.SetLevel(this);
-        AddChild(cogwheel);
     }
 
     void spawnSpikeObjects()

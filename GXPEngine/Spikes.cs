@@ -38,11 +38,15 @@ class Spikes : AnimationSprite
         {
             radiusWidth = width / 2;
             radiusHeight = height / 2;
-        }
+        }        
+        
+        //Fix the rotation issue by placing the level in the correct location but offsetting the position of the rest of the objects.
+        x -= game.width / 2;
+        y -= game.height / 2;
 
         Top = new SpikeWall(new Vec2(x + radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y - radiusHeight), 0.2f, 0xff00ff00, 3);
         parent.AddChild(Top);
-        
+
         parent.AddChild(new CogWheel(0, new Vec2(x - radiusWidth, y - radiusHeight), 0, false));
         parent.AddChild(new CogWheel(0, new Vec2(x + radiusWidth, y - radiusHeight), 0, false));
 
