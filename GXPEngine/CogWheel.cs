@@ -417,13 +417,13 @@ class CogWheel : AnimationSprite
         {
             health--;
             takeDamage = false;
+            Console.WriteLine("OUCH!");
         }
     }
     // Used to set which object spawned line caps.
     public void SetSpawnType(Type type)
     {
         spawnType = type;
-        //Console.WriteLine("Spawn Type: {0}", spawnType);
     }
 
 }

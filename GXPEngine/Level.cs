@@ -10,14 +10,16 @@ using TiledMapParser;
 class Level : GameObject
 {
     public float targetAngle { get; private set; }
+    public string levelTileSet { get; private set; }
     Vec2 position = new Vec2();
     CogWheel cogWheel;
-    TileSet tileSet;
+    public TileSet tileSet { get; private set; }
 
     public readonly CogWheel[] _movers;
     public readonly LineSegment[] _lines;
     public Level(Vec2 pPosition, string mapName)
     {
+        levelTileSet = mapName;
         targetAngle = 0;
         position = pPosition;
         x = position.x;

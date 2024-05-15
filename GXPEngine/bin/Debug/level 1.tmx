@@ -48,7 +48,11 @@
 </data>
  </layer>
  <objectgroup id="2" name="Objects">
-  <object id="20" name="Tileset" type="TileSet" x="640" y="222" width="641.333" height="638.667"/>
+  <object id="20" name="Tileset" type="TileSet" x="640" y="222" width="641.333" height="638.667">
+   <properties>
+    <property name="nextLevel" value="level 2.tmx"/>
+   </properties>
+  </object>
   <object id="3" name="Platform 1" type="Platform" x="1056.09" y="220.333" width="224.242" height="223.333"/>
   <object id="4" name="Platform 2" type="Platform" x="640.333" y="443.5" width="32" height="194"/>
   <object id="5" name="Platform 3" type="Platform" x="640" y="636.833" width="224.091" height="224"/>
