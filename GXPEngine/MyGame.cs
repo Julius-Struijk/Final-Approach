@@ -30,15 +30,13 @@ public class MyGame : Game {
             // Checks whether the level has been won.
             if (level.winCheck())
             {
-                Console.WriteLine("Level won!");
                 currentLevel = level.tileSet.nextLevel;
-                //LoadLevel(currentLevel);
+                LoadLevel(currentLevel);
             }
 
             // Checks whether the player has died.
             if (level.deathCheck())
             {
-                Console.WriteLine("Player died.");
                 currentLevel = level.levelTileSet;
                 LoadLevel(currentLevel);
             }
