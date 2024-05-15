@@ -10,6 +10,7 @@ class Level : GameObject
 {
     public float targetAngle { get; private set; }
     Vec2 position = new Vec2();
+    CogWheel cogWheel;
 
     public readonly CogWheel[] _movers;
     public readonly LineSegment[] _lines;
@@ -24,14 +25,14 @@ class Level : GameObject
 
         TiledLoader loader = new TiledLoader(mapName);
         loader.rootObject = this;
-        //loader.LoadTileLayers(0);
         loader.autoInstance = true;
+        //loader.LoadTileLayers(0);
         loader.LoadObjectGroups(0);
+        cogWheel = FindObjectOfType<CogWheel>();
+        cogWheel.SetProperties();
 
-        spawnPlatformLines();
+        spawnPlatformObjects();
         spawnSpikeObjects();
-
-        //spawnSpikes();
 
         //After all lines have been added to the level they are found and assigned to the lines list
         _lines = FindObjectsOfType<LineSegment>();
@@ -96,14 +97,14 @@ class Level : GameObject
         }
     }
 
-    void spawnPlatformLines()
+    void spawnPlatformObjects()
     {
         //Platform platform = new Platform(pPosition, pWidth, pHeight);
         //AddChild(platform);
         Platform[] platforms = FindObjectsOfType<Platform>();
         foreach (Platform platform in platforms)
         {
-            platform.AddLines();
+            platform.AddObjects();
         }
     }
 }

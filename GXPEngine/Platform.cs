@@ -31,12 +31,13 @@ class Platform : Sprite
         SetOrigin(width / 2, height / 2);
         //x = pPosition.x + radiusWidth;
         //y = pPosition.y + radiusHeight;
+        alpha = 0;
         
     }
 
     // Adding Lines Seperately from the rest of the platform so parent is assigned and the lines can be added there.
 
-    public void AddLines()
+    public void AddObjects()
     {
         radiusWidth = width / 2;
         radiusHeight = height / 2;
@@ -49,8 +50,14 @@ class Platform : Sprite
         Top = new LineSegment(new Vec2(x + radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y - radiusHeight), 0xff00ff00, 3);
         parent.AddChild(Top);
 
+        parent.AddChild(new CogWheel(0, new Vec2(x - radiusWidth, y - radiusHeight), 0, false));
+        parent.AddChild(new CogWheel(0, new Vec2(x + radiusWidth, y - radiusHeight), 0, false));
+
         Bottom = new LineSegment(new Vec2(x - radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y + radiusHeight), 0xff00ff00, 3);
         parent.AddChild(Bottom);
+
+        parent.AddChild(new CogWheel(0, new Vec2(x - radiusWidth, y + radiusHeight), 0, false));
+        parent.AddChild(new CogWheel(0, new Vec2(x + radiusWidth, y + radiusHeight), 0, false));
 
         Left = new LineSegment(new Vec2(x - radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y + radiusHeight), 0xff00ff00, 3);
         parent.AddChild(Left);

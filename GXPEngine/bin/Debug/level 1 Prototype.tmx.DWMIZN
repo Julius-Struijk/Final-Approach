@@ -58,7 +58,7 @@
   <object id="18" name="Spike 2" type="Spikes" gid="11" x="1113.32" y="668.333" width="66.7023" height="34" rotation="-90"/>
   <object id="19" name="Spike 3" type="Spikes" gid="11" x="849.983" y="669" width="66.7023" height="34"/>
   <object id="20" name="Spike 1" type="Spikes" gid="11" x="809.759" y="367.667" width="61.4707" height="31.3333" rotation="90"/>
-  <object id="21" name="Player" type="CogWheel" gid="2" x="945" y="525" width="30" height="30">
+  <object id="21" name="Player" type="CogWheel" gid="2" x="1083.67" y="397" width="30" height="30">
    <properties>
     <property name="health" type="int" value="10"/>
     <property name="moving" type="bool" value="true"/>

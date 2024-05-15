@@ -19,7 +19,7 @@ class CogWheel : AnimationSprite
     private int health;
     private int maxHealth;
     private float drag = 0.05f;
-    private float characterMass = 40f;
+    private float characterMass = 60f;
     float bounciness = 0.98f;
     //float oldRotation = 0;
 
@@ -103,14 +103,15 @@ class CogWheel : AnimationSprite
             radius = obj.GetIntProperty("radius", 0);
         }
 
-        position = new Vec2(x, y);
+        //position = new Vec2(x, y);
+        //Console.WriteLine(position);
 
         //Makes the main Animation invisible which preserves the system you had in place previously.
         alpha = 0;
 
-        SetOrigin(radius / 2, radius / 2);
+        SetOrigin(radius * 2, radius * 2);
 
-        this.maxHealth = health;
+        maxHealth = health;
 
         eState = EState.Idle;
 
@@ -118,13 +119,13 @@ class CogWheel : AnimationSprite
 
         // For some reason the size and offset of the animation does need the width of the actual sprite instead of the regular width. But this only happens in Tiled, not through GXP.
         tiledSpriteRadius = width;
-        idleAnimation.width = tiledSpriteRadius * 2;
-        idleAnimation.height = tiledSpriteRadius * 2;
+        idleAnimation.width = tiledSpriteRadius;
+        idleAnimation.height = tiledSpriteRadius;
 
         idleAnimation.visible = false;
         AddChild(idleAnimation);
 
-        UpdateScreenPosition();
+        //UpdateScreenPosition();
 
         for (int i = 0; i < maxHealth; i++)
         {
@@ -132,13 +133,13 @@ class CogWheel : AnimationSprite
             game.AddChild(heartEmpty);
             emptyHearts.Add(heartEmpty);
             heartEmpty.scale = 0.2f;
-            heartEmpty.SetXY(1600 + 100 * i, 25);
+            heartEmpty.SetXY(25, 105 * i + 15);
             heartEmpty.visible = false;
             heartFull = new Sprite("Assets/heartFull.png");
             game.AddChild(heartFull);
             fullHearts.Add(heartFull);
             heartFull.scale = 0.2f;
-            heartFull.SetXY(1600 + 100 * i, 25);
+            heartFull.SetXY(25, 105 * i + 15);
             heartFull.visible = false;
         }
     }
@@ -160,9 +161,10 @@ class CogWheel : AnimationSprite
     {
         x = position.x;
         y = position.y;
+        //Console.WriteLine("Updated position to: {0} {1}", x, y);
 
-        idleAnimation.x = -tiledSpriteRadius;
-        idleAnimation.y = -tiledSpriteRadius;
+        idleAnimation.x = -tiledSpriteRadius / 2;
+        idleAnimation.y = -tiledSpriteRadius / 2;
     }
 
     void Movement()
@@ -391,6 +393,13 @@ class CogWheel : AnimationSprite
         //if (Approx(parent.rotation, -135, 0.5f)) { gravity = new Vec2(-4.905f, -4.905f); }
         //Console.WriteLine("Gravity changed to: {0}", gravity);
         //Console.WriteLine("Rotation: {0}", parent.rotation);
+    }
+
+    public void SetProperties()
+    {
+        // Make the starting position of the ball match that of what is shown in Tiled.
+        position = new Vec2 (x -= game.width / 2, y -= game.height / 2);
+        Console.WriteLine("X: {0} Y: {1}", x, y);
     }
 
     private void UpdateHearts()
