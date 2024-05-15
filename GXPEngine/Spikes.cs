@@ -38,8 +38,8 @@ class Spikes : AnimationSprite
         {
             radiusWidth = width / 2;
             radiusHeight = height / 2;
-        }        
-        
+        }
+
         //Fix the rotation issue by placing the level in the correct location but offsetting the position of the rest of the objects.
         x -= game.width / 2;
         y -= game.height / 2;

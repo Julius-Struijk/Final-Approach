@@ -19,7 +19,7 @@ class CogWheel : AnimationSprite
     private int health;
     private int maxHealth;
     private float drag = 0.05f;
-    private float characterMass = 60f;
+    private float characterMass = 40f;
     float bounciness = 0.98f;
     //float oldRotation = 0;
 
@@ -93,7 +93,6 @@ class CogWheel : AnimationSprite
     // This constructor is used for balls in Tiled.
     public CogWheel(string filename, int colls, int rows, TiledObject obj = null) : base(filename, colls, rows)
     {
-
         if (obj != null)
         {
             // Default values are used for line caps.
@@ -102,9 +101,6 @@ class CogWheel : AnimationSprite
             // The width of the object uses the full width of the sprite instead of the width put in Tiled when initializing for some reason, so I set it seperately.
             radius = obj.GetIntProperty("radius", 0);
         }
-
-        //position = new Vec2(x, y);
-        //Console.WriteLine(position);
 
         //Makes the main Animation invisible which preserves the system you had in place previously.
         alpha = 0;
@@ -398,8 +394,7 @@ class CogWheel : AnimationSprite
     public void SetProperties()
     {
         // Make the starting position of the ball match that of what is shown in Tiled.
-        position = new Vec2 (x -= game.width / 2, y -= game.height / 2);
-        Console.WriteLine("X: {0} Y: {1}", x, y);
+        position = new Vec2 (x - game.width / 2, y - game.height / 2);
     }
 
     private void UpdateHearts()

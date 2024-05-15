@@ -26,11 +26,14 @@ class Level : GameObject
         TiledLoader loader = new TiledLoader(mapName);
         loader.rootObject = this;
         loader.autoInstance = true;
+
         //loader.LoadTileLayers(0);
+
         loader.LoadObjectGroups(0);
+        TileSet tileSet = FindObjectOfType<TileSet>();
+        tileSet.FixOffset();
         cogWheel = FindObjectOfType<CogWheel>();
         cogWheel.SetProperties();
-
         spawnPlatformObjects();
         spawnSpikeObjects();
 
@@ -60,22 +63,32 @@ class Level : GameObject
 
         if (rotation - targetAngle < -180)
         {
+            //position.RotateAroundDegrees(new Vec2(game.width / 2, game.height / 2), -1);
             position.RotateDegrees(-1);
+            //position -= new Vec2(game.width / 2, game.height / 2);
             rotation = position.GetAngleDegrees();
+            //position += new Vec2(game.width / 2, game.height / 2);
         }
 
         else if (targetAngle > rotation + 0.5f || rotation - targetAngle > 180)
         {
+            //position.RotateAroundDegrees(new Vec2(game.width / 2, game.height / 2), 1);
             position.RotateDegrees(1);
+            //position -= new Vec2(game.width / 2, game.height / 2);
             float prevRotation = rotation;
             rotation = position.GetAngleDegrees();
+            //position += new Vec2(game.width / 2, game.height / 2);
             if (prevRotation - rotation > 1 && targetAngle == 180) { rotation = 180; }
         }
         else if (targetAngle < rotation - 0.5f)
         {
+            //position.RotateAroundDegrees(new Vec2(game.width / 2, game.height / 2), -1);
             position.RotateDegrees(-1);
+            //position -= new Vec2(game.width / 2, game.height / 2);
             rotation = position.GetAngleDegrees();
+            //position += new Vec2(game.width / 2, game.height / 2);
         }
+        //Console.WriteLine("Rotation: {0}", rotation);
     }
 
     void Update()

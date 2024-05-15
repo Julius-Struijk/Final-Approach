@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
- <tileset firstgid="1" source="../edited tileset.tsx"/>
- <layer id="1" name="Tile Layer 1" width="20" height="20">
+ <tileset firstgid="1" name="edited tileset" tilewidth="32" tileheight="32" tilecount="27" columns="9">
+  <image source="Assets/tile set.png" width="288" height="96"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" class="TileSet" width="20" height="20">
   <data encoding="csv">
 16,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20,17,
 12,0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0,0,18,10,
