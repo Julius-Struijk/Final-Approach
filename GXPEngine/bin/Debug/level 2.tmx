@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="4">
  <tileset firstgid="1" name="edited tileset" tilewidth="32" tileheight="32" tilecount="27" columns="9">
   <image source="Assets/tile set.png" width="288" height="96"/>
+ </tileset>
+ <tileset firstgid="28" name="Saw" tilewidth="514" tileheight="262" tilecount="6" columns="6">
+  <image source="Assets/Saw.png" trans="ff00ff" width="3084" height="262"/>
+ </tileset>
+ <tileset firstgid="34" name="Ball Placeholder" tilewidth="502" tileheight="502" tilecount="8" columns="8">
+  <image source="Assets/placeholderPlayerNoSpace.png" trans="ff00ff" width="4016" height="502"/>
  </tileset>
  <layer id="1" name="Tile Layer 1" class="TileSet" width="60" height="34">
   <data encoding="csv">
@@ -41,5 +47,18 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="2" name="Object Layer 1"/>
+ <objectgroup id="2" name="Object Layer 1">
+  <object id="1" name="Tile Set" type="TileSet" x="638.185" y="223.667" width="641.909" height="639.333">
+   <properties>
+    <property name="nextLevel" value="level 1.tmx"/>
+   </properties>
+  </object>
+  <object id="3" name="Player" type="CogWheel" gid="34" x="673" y="351.5" width="30" height="30">
+   <properties>
+    <property name="health" type="int" value="3"/>
+    <property name="moving" type="bool" value="true"/>
+    <property name="radius" type="int" value="15"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

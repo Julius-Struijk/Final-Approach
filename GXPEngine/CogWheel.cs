@@ -342,11 +342,9 @@ class CogWheel : AnimationSprite
             Vec2 unitNormal = col.normal.Normalized();
             velocity.Reflect(unitNormal, bounciness);
             CogWheel lineCap = (CogWheel)col.other;
-            Console.WriteLine("Linecap Type: {0}", lineCap.spawnType);
             if (lineCap.spawnType == typeof(Spikes))
             {
                 takeDamage = true;
-                Console.WriteLine("Took damage.");
             }
         } else if(col.other is BouncyWall wall)
         {
@@ -417,7 +415,6 @@ class CogWheel : AnimationSprite
         {
             health--;
             takeDamage = false;
-            Console.WriteLine("OUCH!");
         }
     }
     // Used to set which object spawned line caps.

@@ -48,32 +48,32 @@
 </data>
  </layer>
  <objectgroup id="2" name="Objects">
-  <object id="20" name="Tileset" type="TileSet" x="640" y="222" width="641.333" height="638.667">
+  <object id="20" name="Tileset" type="TileSet" x="616.298" y="195.785" width="686.702" height="683.847">
    <properties>
     <property name="nextLevel" value="level 2.tmx"/>
    </properties>
   </object>
-  <object id="3" name="Platform 1" type="Platform" x="1056.09" y="220.333" width="224.242" height="223.333"/>
-  <object id="4" name="Platform 2" type="Platform" x="640.333" y="443.5" width="32" height="194"/>
-  <object id="5" name="Platform 3" type="Platform" x="640" y="636.833" width="224.091" height="224"/>
-  <object id="6" name="Platform 4" type="Platform" x="640" y="220.5" width="223.333" height="223.333"/>
-  <object id="7" name="Platform 5" type="Platform" x="1055.75" y="636.833" width="224.666" height="224.333"/>
-  <object id="8" name="Platform 6" type="Platform" x="1248" y="444.167" width="32" height="194"/>
-  <object id="9" name="Platform 7" type="Platform" x="1024.67" y="508.803" width="63.2727" height="64"/>
-  <object id="10" name="Platform 8" type="Platform" x="896.333" y="444.5" width="32" height="192"/>
-  <object id="11" name="Platform 9" type="Platform" x="992.333" y="444.5" width="32" height="192"/>
-  <object id="12" name="Platform 10" type="Platform" x="832.114" y="508.5" width="64.1477" height="64"/>
-  <object id="13" name="Platform 11" type="Platform" x="991.381" y="220.742" width="64.4204" height="95.5455"/>
-  <object id="14" name="Platform 12" type="Platform" x="863.881" y="220.773" width="127.057" height="31.2727"/>
-  <object id="15" name="Platform 13" type="Platform" x="991.763" y="828.636" width="63.7843" height="32"/>
-  <object id="16" name="Platform 14" type="Platform" x="864.29" y="828.489" width="63.7843" height="32"/>
-  <object id="17" name="Player" type="CogWheel" gid="28" x="1217.15" y="635.73" width="30" height="30">
+  <object id="3" name="Platform 1" type="Platform" x="1061.82" y="194" width="240.105" height="239.132"/>
+  <object id="4" name="Platform 2" type="Platform" x="616.655" y="432.954" width="34.2637" height="207.724"/>
+  <object id="5" name="Platform 3" type="Platform" x="616.298" y="639.963" width="239.943" height="239.846"/>
+  <object id="6" name="Platform 4" type="Platform" x="616.298" y="194.178" width="239.132" height="239.132"/>
+  <object id="7" name="Platform 5" type="Platform" x="1061.46" y="639.963" width="240.559" height="240.203"/>
+  <object id="8" name="Platform 6" type="Platform" x="1267.31" y="433.668" width="34.2637" height="207.724"/>
+  <object id="9" name="Platform 7" type="Platform" x="1028.18" y="502.876" width="67.7487" height="68.5274"/>
+  <object id="10" name="Platform 8" type="Platform" x="890.764" y="434.025" width="34.2637" height="205.582"/>
+  <object id="11" name="Platform 9" type="Platform" x="993.555" y="434.025" width="34.2637" height="205.582"/>
+  <object id="12" name="Platform 10" type="Platform" x="822.002" y="502.552" width="68.6856" height="68.5274"/>
+  <object id="13" name="Platform 11" type="Platform" x="992.536" y="194.438" width="68.9776" height="102.305"/>
+  <object id="14" name="Platform 12" type="Platform" x="856.017" y="194.471" width="136.045" height="33.485"/>
+  <object id="15" name="Platform 13" type="Platform" x="992.945" y="845.335" width="68.2965" height="34.2637"/>
+  <object id="16" name="Platform 14" type="Platform" x="856.455" y="845.177" width="68.2965" height="34.2637"/>
+  <object id="17" name="Player" type="CogWheel" gid="28" x="1230.82" y="635.73" width="30" height="30">
    <properties>
     <property name="health" type="int" value="3"/>
     <property name="moving" type="bool" value="true"/>
     <property name="radius" type="int" value="15"/>
    </properties>
   </object>
-  <object id="18" name="Spike 1" type="Spikes" gid="36" x="864.278" y="733.159" width="62.5286" height="31.8726" rotation="90"/>
+  <object id="18" name="Spike 1" type="Spikes" gid="36" x="856.442" y="743.104" width="66.952" height="34.1273" rotation="90"/>
  </objectgroup>
 </map>
