@@ -22,6 +22,7 @@ class CogWheel : AnimationSprite
     private int maxHealth;
     private float drag = 0.05f;
     private float characterMass = 40f;
+    private float damageCooldown = 2f;
     float bounciness = 0.98f;
     //float oldRotation = 0;
 
@@ -75,7 +76,7 @@ class CogWheel : AnimationSprite
         AddChild(idleAnimation);
         UpdateScreenPosition();
 
-        for (int i = 0; i < maxHealth; i++)
+        for(int i = 0; i < maxHealth; i++)
         {
             heartEmpty = new Sprite("Assets/heartEmpty.png");
             game.AddChild(heartEmpty);
@@ -95,7 +96,7 @@ class CogWheel : AnimationSprite
     // This constructor is used for balls in Tiled.
     public CogWheel(string filename, int colls, int rows, TiledObject obj = null) : base(filename, colls, rows)
     {
-        if (obj != null)
+        if(obj != null)
         {
             // Default values are used for line caps.
             moving = obj.GetBoolProperty("moving", false);
@@ -125,7 +126,7 @@ class CogWheel : AnimationSprite
 
         UpdateScreenPosition();
 
-        for (int i = 0; i < maxHealth; i++)
+        for(int i = 0; i < maxHealth; i++)
         {
             heartEmpty = new Sprite("Assets/heartEmpty.png");
             game.AddChild(heartEmpty);
@@ -144,15 +145,15 @@ class CogWheel : AnimationSprite
 
     void Update()
     {
+        float deltaTime = Time.deltaTime / 1000f;
+        if(damageCooldown >= 0)
+        {
+            damageCooldown -= deltaTime;
+            Console.WriteLine("cooldown: " + damageCooldown);
+        }
         Movement();
         Animation();
         UpdateHearts();
-
-        if(Input.GetKeyUp(Key.M))
-        {
-            takeDamage = true;
-            Console.WriteLine("damaged");
-        }
     }
 
     void UpdateScreenPosition()
@@ -248,7 +249,7 @@ class CogWheel : AnimationSprite
         // Check other movers:			
         foreach(CogWheel mover in level._movers)
         {
-            if (mover != this)
+            if(mover != this)
             {
                 Vec2 relativePosition = position - mover.position;
 
@@ -264,7 +265,7 @@ class CogWheel : AnimationSprite
         }
 
 
-        foreach (LineSegment line in level._lines)
+        foreach(LineSegment line in level._lines)
         {
             //b.1
             Vec2 differenceVectorMovement = position - _oldPosition;
@@ -343,10 +344,9 @@ class CogWheel : AnimationSprite
             velocity.Reflect(unitNormal, bounciness);
             CogWheel lineCap = (CogWheel)col.other;
             Console.WriteLine("Linecap Type: {0}", lineCap.spawnType);
-            if (lineCap.spawnType == typeof(Spikes))
+            if(lineCap.spawnType == typeof(Spikes))
             {
                 takeDamage = true;
-                Console.WriteLine("Took damage.");
             }
         } else if(col.other is BouncyWall wall)
         {
@@ -397,7 +397,7 @@ class CogWheel : AnimationSprite
     {
         //Console.WriteLine("Properties set!");
         // Make the starting position of the ball match that of what is shown in Tiled.
-        position = new Vec2 (x - game.width / 2, y - game.height / 2);
+        position = new Vec2(x - game.width / 2, y - game.height / 2);
     }
 
     private void UpdateHearts()
@@ -413,11 +413,11 @@ class CogWheel : AnimationSprite
             emptyHearts[i].visible = i > remainingHealth;
         }
 
-        if (takeDamage)
+        if(takeDamage && damageCooldown <= 0)
         {
             health--;
             takeDamage = false;
-            Console.WriteLine("OUCH!");
+            damageCooldown = 2f;
         }
     }
     // Used to set which object spawned line caps.
