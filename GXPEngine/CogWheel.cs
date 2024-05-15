@@ -16,7 +16,9 @@ public enum EState
 }
 class CogWheel : AnimationSprite
 {
-    private int health;
+    public int health { get; private set; }
+    public Type spawnType { get; private set; }
+
     private int maxHealth;
     private float drag = 0.05f;
     private float characterMass = 40f;
@@ -34,7 +36,7 @@ class CogWheel : AnimationSprite
     private Vec2 velocity;
     //Vec2 extraVelocity;
     Vec2 position;
-    Vec2 _oldPosition;
+    public Vec2 _oldPosition { get; private set; }
     public readonly int radius;
     int tiledSpriteRadius;
 
@@ -121,7 +123,7 @@ class CogWheel : AnimationSprite
         idleAnimation.visible = false;
         AddChild(idleAnimation);
 
-        //UpdateScreenPosition();
+        UpdateScreenPosition();
 
         for (int i = 0; i < maxHealth; i++)
         {
@@ -339,7 +341,13 @@ class CogWheel : AnimationSprite
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normalized();
             velocity.Reflect(unitNormal, bounciness);
-            takeDamage = true;
+            CogWheel lineCap = (CogWheel)col.other;
+            Console.WriteLine("Linecap Type: {0}", lineCap.spawnType);
+            if (lineCap.spawnType == typeof(Spikes))
+            {
+                takeDamage = true;
+                Console.WriteLine("Took damage.");
+            }
         } else if(col.other is BouncyWall wall)
         {
             position += velocity * col.timeOfImpact;
@@ -351,18 +359,12 @@ class CogWheel : AnimationSprite
             Vec2 unitNormal = col.normal.Normal();
             velocity.Reflect(unitNormal, spikeWall.bounciness);
             takeDamage = true;
-            Console.WriteLine("Taking damage");
         } else if(col.other is LineSegment)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normal();
             velocity.Reflect(unitNormal, bounciness);
         }
-    }
-
-    static bool Approx(float a, float b, float epsilon = 0.000001f)
-    {
-        return Mathf.Abs(a - b) < epsilon;
     }
 
     void ChangeGravity()
@@ -393,6 +395,7 @@ class CogWheel : AnimationSprite
 
     public void SetProperties()
     {
+        //Console.WriteLine("Properties set!");
         // Make the starting position of the ball match that of what is shown in Tiled.
         position = new Vec2 (x - game.width / 2, y - game.height / 2);
     }
@@ -416,4 +419,11 @@ class CogWheel : AnimationSprite
             takeDamage = false;
         }
     }
+    // Used to set which object spawned line caps.
+    public void SetSpawnType(Type type)
+    {
+        spawnType = type;
+        //Console.WriteLine("Spawn Type: {0}", spawnType);
+    }
+
 }

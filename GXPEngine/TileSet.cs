@@ -10,7 +10,7 @@ class TileSet : Sprite
 {
     public TileSet(TiledObject obj = null) : base("Assets/Tileset Level 1.png")
     {
-        Console.WriteLine("Using constructor.");
+
     }
 
     public void FixOffset()

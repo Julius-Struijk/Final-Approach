@@ -1,3 +1,4 @@
+using System;
 using System.Drawing.Text;
 using System.Reflection.Emit;
 using GXPEngine;
@@ -6,7 +7,6 @@ using TiledMapParser;
 public class MyGame : Game {
 
     static Level level;
-    static CogWheel cogWheel;
     static PanoramaManager panoramaManager;
 
     public MyGame() : base(1920, 1080, false,false,-1,-1,true)
@@ -21,6 +21,17 @@ public class MyGame : Game {
 
 	void Update()
     {
+        // Checks whether the level has been won.
+        if(level.winCheck())
+        {
+            //Console.WriteLine("Level won!");
+        }
+
+        // Checks whether the player has died.
+        if (level.deathCheck())
+        {
+            //Console.WriteLine("Player died.");
+        }
     }
 
     void ResetLevel()

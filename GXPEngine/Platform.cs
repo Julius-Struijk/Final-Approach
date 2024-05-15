@@ -50,14 +50,24 @@ class Platform : Sprite
         Top = new LineSegment(new Vec2(x + radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y - radiusHeight), 0xff00ff00, 3);
         parent.AddChild(Top);
 
-        parent.AddChild(new CogWheel(0, new Vec2(x - radiusWidth, y - radiusHeight), 0, false));
-        parent.AddChild(new CogWheel(0, new Vec2(x + radiusWidth, y - radiusHeight), 0, false));
+        CogWheel topLeft = new CogWheel(0, new Vec2(x - radiusWidth, y - radiusHeight), 0, false);
+        topLeft.SetSpawnType(typeof(Platform));
+        parent.AddChild(topLeft);
+
+        CogWheel topRight = new CogWheel(0, new Vec2(x + radiusWidth, y - radiusHeight), 0, false);
+        topRight.SetSpawnType(typeof(Platform));
+        parent.AddChild(topRight);
 
         Bottom = new LineSegment(new Vec2(x - radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y + radiusHeight), 0xff00ff00, 3);
         parent.AddChild(Bottom);
 
-        parent.AddChild(new CogWheel(0, new Vec2(x - radiusWidth, y + radiusHeight), 0, false));
-        parent.AddChild(new CogWheel(0, new Vec2(x + radiusWidth, y + radiusHeight), 0, false));
+        CogWheel bottomLeft = new CogWheel(0, new Vec2(x - radiusWidth, y + radiusHeight), 0, false);
+        bottomLeft.SetSpawnType(typeof(Platform));
+        parent.AddChild(bottomLeft);
+
+        CogWheel bottomRight = new CogWheel(0, new Vec2(x + radiusWidth, y + radiusHeight), 0, false);
+        bottomRight.SetSpawnType(typeof(Platform));
+        parent.AddChild(bottomRight);
 
         Left = new LineSegment(new Vec2(x - radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y + radiusHeight), 0xff00ff00, 3);
         parent.AddChild(Left);

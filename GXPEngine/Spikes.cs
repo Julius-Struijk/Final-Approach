@@ -47,15 +47,24 @@ class Spikes : AnimationSprite
         Top = new SpikeWall(new Vec2(x + radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y - radiusHeight), 0.2f, 0xff00ff00, 3);
         parent.AddChild(Top);
 
-        parent.AddChild(new CogWheel(0, new Vec2(x - radiusWidth, y - radiusHeight), 0, false));
-        parent.AddChild(new CogWheel(0, new Vec2(x + radiusWidth, y - radiusHeight), 0, false));
+        CogWheel topLeft = new CogWheel(0, new Vec2(x - radiusWidth, y - radiusHeight), 0, false);
+        topLeft.SetSpawnType(typeof(Spikes));
+        parent.AddChild(topLeft);
 
+        CogWheel topRight = new CogWheel(0, new Vec2(x + radiusWidth, y - radiusHeight), 0, false);
+        topRight.SetSpawnType(typeof(Spikes));
+        parent.AddChild(topRight);
 
         Bottom = new SpikeWall(new Vec2(x - radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y + radiusHeight), 0.2f, 0xff00ff00, 3);
         parent.AddChild(Bottom);
 
-        parent.AddChild(new CogWheel(0, new Vec2(x - radiusWidth, y + radiusHeight), 0, false));
-        parent.AddChild(new CogWheel(0, new Vec2(x + radiusWidth, y + radiusHeight), 0, false));
+        CogWheel bottomLeft = new CogWheel(0, new Vec2(x - radiusWidth, y + radiusHeight), 0, false);
+        bottomLeft.SetSpawnType(typeof(Spikes));
+        parent.AddChild(bottomLeft);
+
+        CogWheel bottomRight = new CogWheel(0, new Vec2(x + radiusWidth, y + radiusHeight), 0, false);
+        bottomRight.SetSpawnType(typeof(Spikes));
+        parent.AddChild(bottomRight);
 
         Left = new SpikeWall(new Vec2(x - radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y + radiusHeight), 0.2f, 0xff00ff00, 3);
         parent.AddChild(Left);

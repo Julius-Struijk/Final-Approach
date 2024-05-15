@@ -1,5 +1,6 @@
 
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Media;
 using System.Security.AccessControl;
@@ -11,6 +12,7 @@ class Level : GameObject
     public float targetAngle { get; private set; }
     Vec2 position = new Vec2();
     CogWheel cogWheel;
+    TileSet tileSet;
 
     public readonly CogWheel[] _movers;
     public readonly LineSegment[] _lines;
@@ -27,10 +29,8 @@ class Level : GameObject
         loader.rootObject = this;
         loader.autoInstance = true;
 
-        //loader.LoadTileLayers(0);
-
         loader.LoadObjectGroups(0);
-        TileSet tileSet = FindObjectOfType<TileSet>();
+        tileSet = FindObjectOfType<TileSet>();
         tileSet.FixOffset();
         cogWheel = FindObjectOfType<CogWheel>();
         cogWheel.SetProperties();
@@ -63,32 +63,22 @@ class Level : GameObject
 
         if (rotation - targetAngle < -180)
         {
-            //position.RotateAroundDegrees(new Vec2(game.width / 2, game.height / 2), -1);
             position.RotateDegrees(-1);
-            //position -= new Vec2(game.width / 2, game.height / 2);
             rotation = position.GetAngleDegrees();
-            //position += new Vec2(game.width / 2, game.height / 2);
         }
 
         else if (targetAngle > rotation + 0.5f || rotation - targetAngle > 180)
         {
-            //position.RotateAroundDegrees(new Vec2(game.width / 2, game.height / 2), 1);
             position.RotateDegrees(1);
-            //position -= new Vec2(game.width / 2, game.height / 2);
             float prevRotation = rotation;
             rotation = position.GetAngleDegrees();
-            //position += new Vec2(game.width / 2, game.height / 2);
             if (prevRotation - rotation > 1 && targetAngle == 180) { rotation = 180; }
         }
         else if (targetAngle < rotation - 0.5f)
         {
-            //position.RotateAroundDegrees(new Vec2(game.width / 2, game.height / 2), -1);
             position.RotateDegrees(-1);
-            //position -= new Vec2(game.width / 2, game.height / 2);
             rotation = position.GetAngleDegrees();
-            //position += new Vec2(game.width / 2, game.height / 2);
         }
-        //Console.WriteLine("Rotation: {0}", rotation);
     }
 
     void Update()
@@ -112,12 +102,36 @@ class Level : GameObject
 
     void spawnPlatformObjects()
     {
-        //Platform platform = new Platform(pPosition, pWidth, pHeight);
-        //AddChild(platform);
         Platform[] platforms = FindObjectsOfType<Platform>();
         foreach (Platform platform in platforms)
         {
             platform.AddObjects();
         }
+    }
+
+    public bool winCheck()
+    {
+        // Check that prevents an automatic win when the positions are wrong as they are being spawned in.
+        if (cogWheel.x - cogWheel._oldPosition.x > 600) { return false; }
+
+        else if(cogWheel.x > tileSet.x + tileSet.width || cogWheel.x < tileSet.x - tileSet.width || cogWheel.y > tileSet.y + tileSet.height || cogWheel.y < tileSet.y - tileSet.height)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool deathCheck()
+    {
+        if(cogWheel.health == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    static bool Approx(float a, float b, float epsilon = 0.000001f)
+    {
+        return Mathf.Abs(a - b) < epsilon;
     }
 }
