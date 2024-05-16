@@ -45,6 +45,7 @@ class Level : GameObject
         cogWheel.SetProperties();
         spawnPlatformObjects();
         spawnSpikeObjects();
+        spawnSpringObjects();
 
         //After all lines have been added to the level they are found and assigned to the lines list
         _lines = FindObjectsOfType<LineSegment>();
@@ -115,6 +116,14 @@ class Level : GameObject
         foreach (Spikes spike in spikes)
         {
             spike.AddObjects();
+        }
+    }
+    void spawnSpringObjects()
+    {
+        Spring[] springs = FindObjectsOfType<Spring>();
+        foreach (Spring spring in springs)
+        {
+            spring.AddObjects();
         }
     }
 

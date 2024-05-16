@@ -180,6 +180,7 @@ class CogWheel : AnimationSprite
         idleAnimation.y = -tiledSpriteRadius / 2;
         takeDamageAnimation.x = -tiledSpriteRadius / 2;
         takeDamageAnimation.y = -tiledSpriteRadius / 2;
+        //Console.WriteLine("Animation True Position: {0}", x - idleAnimation.x, y - idleAnimation.y);
     }
 
     void Movement()
@@ -232,11 +233,9 @@ class CogWheel : AnimationSprite
                         if (lineCap.spawnType == typeof(Spikes))
                         {
                             firstTimeCounter = 6;
-                            Console.WriteLine("Spike line cap counter activated.");
                         }
                     }
                     else { firstTimeCounter = 2;
-                        //Console.WriteLine("Regular counter activated.");
                     }
                 }
 

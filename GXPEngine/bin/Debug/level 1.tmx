@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#c1c1c1" nextlayerid="3" nextobjectid="27">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#c1c1c1" nextlayerid="3" nextobjectid="30">
  <tileset firstgid="1" name="edited tileset" class="TileSet" tilewidth="32" tileheight="32" tilecount="27" columns="9">
   <image source="Assets/tile set.png" width="288" height="96"/>
  </tileset>
@@ -14,6 +14,12 @@
  </tileset>
  <tileset firstgid="54" name="boxFrame" tilewidth="2048" tileheight="2048" tilecount="1" columns="1">
   <image source="Assets/boxFrame.png" trans="ff00ff" width="2048" height="2048"/>
+ </tileset>
+ <tileset firstgid="55" name="spring" tilewidth="512" tileheight="512" tilecount="12" columns="12">
+  <image source="Assets/spring.png" trans="ff00ff" width="6144" height="512"/>
+ </tileset>
+ <tileset firstgid="67" name="Spring Subtle" tilewidth="514" tileheight="514" tilecount="12" columns="12">
+  <image source="Assets/springSubtle.png" trans="ff00ff" width="6168" height="514"/>
  </tileset>
  <layer id="1" name="Tile Set" class="0" width="60" height="34" visible="0">
   <data encoding="csv">
@@ -55,7 +61,7 @@
  </layer>
  <objectgroup id="2" name="Objects">
   <object id="26" name="BoxFrame" type="TileSet" gid="54" x="550.667" y="948.333" width="816.667" height="816.667"/>
-  <object id="24" name="Level 1" type="TileSet" gid="42" x="609.372" y="891.997" width="700.778" height="700.654" rotation="0.138458">
+  <object id="24" name="Level 1" type="TileSet" gid="42" x="609.372" y="891.997" width="700.778" height="700.654" rotation="0.138458" visible="0">
    <properties>
     <property name="nextLevel" value="level 2.tmx"/>
    </properties>
@@ -74,13 +80,14 @@
   <object id="14" name="Platform 12" type="Platform" x="853.951" y="189.483" width="139.413" height="34.314"/>
   <object id="15" name="Platform 13" type="Platform" x="994.269" y="856.459" width="69.9872" height="35.1119"/>
   <object id="16" name="Platform 14" type="Platform" x="854.4" y="856.298" width="69.9872" height="35.1119"/>
-  <object id="17" name="Player" type="CogWheel" gid="28" x="1241.82" y="640.73" width="26" height="26">
+  <object id="17" name="Player" type="CogWheel" gid="28" x="1241.82" y="645.397" width="26" height="26">
    <properties>
     <property name="health" type="int" value="3"/>
     <property name="moving" type="bool" value="true"/>
     <property name="radius" type="int" value="13"/>
    </properties>
   </object>
-  <object id="18" name="Spike 1" type="Spikes" gid="36" x="854.387" y="751.698" width="68.6095" height="34.9722" rotation="90"/>
+  <object id="18" name="Spike 1" type="Spikes" gid="36" x="854.387" y="744.698" width="68.6095" height="34.9722" rotation="90"/>
+  <object id="29" name="Spike Subtle" type="Spring" gid="70" x="854.25" y="814" width="42.4167" height="42.4167" rotation="90"/>
  </objectgroup>
 </map>
