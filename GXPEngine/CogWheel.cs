@@ -89,7 +89,6 @@ class CogWheel : AnimationSprite
             game.AddChild(heartEmpty);
             emptyHearts.Add(heartEmpty);
             heartEmpty.scale = 0.2f;
-            heartEmpty.SetXY(1600 + 100 * i, 25);
             heartEmpty.visible = false;
             heartFull = new Sprite("Assets/heartFull.png");
             game.AddChild(heartFull);
@@ -145,15 +144,15 @@ class CogWheel : AnimationSprite
         {
             heartEmpty = new Sprite("Assets/heartEmpty.png");
             game.AddChild(heartEmpty);
+            heartEmpty.SetXY(225, 205 * i + 385);
             emptyHearts.Add(heartEmpty);
             heartEmpty.scale = 0.2f;
-            heartEmpty.SetXY(25, 105 * i + 15);
             heartEmpty.visible = false;
             heartFull = new Sprite("Assets/heartFull.png");
             game.AddChild(heartFull);
+            heartFull.SetXY(225, 105 * i + 385);
             fullHearts.Add(heartFull);
             heartFull.scale = 0.2f;
-            heartFull.SetXY(25, 105 * i + 15);
             heartFull.visible = false;
         }
     }
@@ -465,6 +464,8 @@ class CogWheel : AnimationSprite
         {
             emptyHearts[i].visible = i > remainingHealth;
         }
+
+        
 
         if (takeDamage)
         {
