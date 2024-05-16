@@ -10,6 +10,7 @@ public class SoundManager
     public static SoundManager rotate_right = new SoundManager("Sounds/rotate_right.wav", 0, 0); //Implemented
     public static SoundManager spring_sound = new SoundManager("Sounds/spring_sound.wav", 0, 0); //Implemented
     public static SoundManager victory_sound = new SoundManager("Sounds/victory_sound.wav", 0, 0); //Implemented
+    public static SoundManager background_music = new SoundManager("Sounds/background_music.wav", 0, 0); //Implemented
 
     private Sound storedSound;
     private float defaultVolume;

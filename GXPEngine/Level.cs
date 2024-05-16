@@ -10,6 +10,8 @@ using TiledMapParser;
 
 class Level : GameObject
 {
+    private float timer = 0;
+    private float musicLoopNumber = 316;
     public float targetAngle { get; private set; }
     public int rotationTracker { get; private set; }
     public string levelTileSet { get; private set; }
@@ -107,6 +109,7 @@ class Level : GameObject
     void Update()
     {
         RotateLevel();
+        BackgroundMusic();
     }
 
     void spawnSpikeObjects()
@@ -158,5 +161,17 @@ class Level : GameObject
     static bool Approx(float a, float b, float epsilon = 0.000001f)
     {
         return Mathf.Abs(a - b) < epsilon;
+    }
+
+    void BackgroundMusic()
+    {
+        float deltaTime = Time.deltaTime / 1000f;
+        timer -= deltaTime;
+
+        if (timer <= 0)
+        {
+            SoundManager.background_music.play(1f, 0);
+            timer = musicLoopNumber;
+        }
     }
 }
