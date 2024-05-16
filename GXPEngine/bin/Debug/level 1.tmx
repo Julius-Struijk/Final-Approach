@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#c1c1c1" nextlayerid="3" nextobjectid="22">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#c1c1c1" nextlayerid="3" nextobjectid="25">
  <tileset firstgid="1" name="edited tileset" class="TileSet" tilewidth="32" tileheight="32" tilecount="27" columns="9">
   <image source="Assets/tile set.png" width="288" height="96"/>
  </tileset>
@@ -8,6 +8,9 @@
  </tileset>
  <tileset firstgid="36" name="Saw" tilewidth="514" tileheight="262" tilecount="6" columns="6">
   <image source="Assets/Saw.png" trans="ff00ff" width="3084" height="262"/>
+ </tileset>
+ <tileset firstgid="42" name="Level Tilesets" tilewidth="819" tileheight="885" tilecount="12" columns="12">
+  <image source="Assets/Levels.png" trans="ff00ff" width="10593" height="885"/>
  </tileset>
  <layer id="1" name="Tile Set" class="0" width="60" height="34" visible="0">
   <data encoding="csv">
@@ -48,32 +51,32 @@
 </data>
  </layer>
  <objectgroup id="2" name="Objects">
-  <object id="20" name="Tileset" type="TileSet" x="616.298" y="195.785" width="686.702" height="683.847">
+  <object id="24" name="Level 1" type="TileSet" gid="42" x="609.372" y="891.997" width="703.443" height="700.654" rotation="0.138458">
    <properties>
     <property name="nextLevel" value="level 2.tmx"/>
    </properties>
   </object>
-  <object id="3" name="Platform 1" type="Platform" x="1061.82" y="194" width="240.105" height="239.132"/>
-  <object id="4" name="Platform 2" type="Platform" x="616.655" y="432.954" width="34.2637" height="207.724"/>
-  <object id="5" name="Platform 3" type="Platform" x="616.298" y="639.963" width="239.943" height="239.846"/>
-  <object id="6" name="Platform 4" type="Platform" x="616.298" y="194.178" width="239.132" height="239.132"/>
-  <object id="7" name="Platform 5" type="Platform" x="1061.46" y="639.963" width="240.559" height="240.203"/>
-  <object id="8" name="Platform 6" type="Platform" x="1267.31" y="433.668" width="34.2637" height="207.724"/>
-  <object id="9" name="Platform 7" type="Platform" x="1028.18" y="502.876" width="67.7487" height="68.5274"/>
-  <object id="10" name="Platform 8" type="Platform" x="890.764" y="434.025" width="34.2637" height="205.582"/>
-  <object id="11" name="Platform 9" type="Platform" x="993.555" y="434.025" width="34.2637" height="205.582"/>
-  <object id="12" name="Platform 10" type="Platform" x="822.002" y="502.552" width="68.6856" height="68.5274"/>
-  <object id="13" name="Platform 11" type="Platform" x="992.536" y="194.438" width="68.9776" height="102.305"/>
-  <object id="14" name="Platform 12" type="Platform" x="856.017" y="194.471" width="136.045" height="33.485"/>
-  <object id="15" name="Platform 13" type="Platform" x="992.945" y="845.335" width="68.2965" height="34.2637"/>
-  <object id="16" name="Platform 14" type="Platform" x="856.455" y="845.177" width="68.2965" height="34.2637"/>
-  <object id="17" name="Player" type="CogWheel" gid="28" x="1230.82" y="635.73" width="30" height="30">
+  <object id="3" name="Platform 1" type="Platform" x="1064.85" y="189" width="246.049" height="245.052"/>
+  <object id="4" name="Platform 2" type="Platform" x="608.664" y="433.87" width="35.1119" height="212.866"/>
+  <object id="5" name="Platform 3" type="Platform" x="608.298" y="646.003" width="245.883" height="245.784"/>
+  <object id="6" name="Platform 4" type="Platform" x="608.298" y="189.182" width="245.052" height="245.052"/>
+  <object id="7" name="Platform 5" type="Platform" x="1064.48" y="646.003" width="246.514" height="246.149"/>
+  <object id="8" name="Platform 6" type="Platform" x="1275.43" y="434.601" width="35.1119" height="212.866"/>
+  <object id="9" name="Platform 7" type="Platform" x="1029.09" y="504.556" width="69.213" height="70.0085"/>
+  <object id="10" name="Platform 8" type="Platform" x="889.559" y="434.967" width="35.1119" height="210.671"/>
+  <object id="11" name="Platform 9" type="Platform" x="994.894" y="434.967" width="35.1119" height="210.671"/>
+  <object id="12" name="Platform 10" type="Platform" x="819.094" y="505.191" width="70.386" height="70.2239"/>
+  <object id="13" name="Platform 11" type="Platform" x="993.85" y="189.449" width="70.6852" height="104.838"/>
+  <object id="14" name="Platform 12" type="Platform" x="853.951" y="189.483" width="139.413" height="34.314"/>
+  <object id="15" name="Platform 13" type="Platform" x="994.269" y="856.459" width="69.9872" height="35.1119"/>
+  <object id="16" name="Platform 14" type="Platform" x="854.4" y="856.298" width="69.9872" height="35.1119"/>
+  <object id="17" name="Player" type="CogWheel" gid="28" x="1241.82" y="640.73" width="26" height="26">
    <properties>
     <property name="health" type="int" value="3"/>
     <property name="moving" type="bool" value="true"/>
-    <property name="radius" type="int" value="15"/>
+    <property name="radius" type="int" value="13"/>
    </properties>
   </object>
-  <object id="18" name="Spike 1" type="Spikes" gid="36" x="856.442" y="743.104" width="66.952" height="34.1273" rotation="90"/>
+  <object id="18" name="Spike 1" type="Spikes" gid="36" x="854.387" y="751.698" width="68.6095" height="34.9722" rotation="90"/>
  </objectgroup>
 </map>
