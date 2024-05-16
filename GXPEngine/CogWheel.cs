@@ -218,7 +218,7 @@ class CogWheel : AnimationSprite
             {
                 if (velocity.Length() <= -8f || velocity.Length() >= 8f)
                 {
-                    //SoundManager.Hitting_surface_at_high_speed_sound.play(0.5f, 0);
+                    SoundManager.Hitting_surface_at_high_speed_sound.play(0.1f, 0);
                 }
                 ResolveCollision(firstCollision);
                 if (firstCollision.timeOfImpact == 0 && firstTimeCounter == 0)

@@ -10,8 +10,6 @@ using TiledMapParser;
 
 class Level : GameObject
 {
-    private float timer = 0;
-    private float musicLoopNumber = 282;
     public float targetAngle { get; private set; }
     public int rotationTracker { get; private set; }
     public string levelTileSet { get; private set; }
@@ -61,11 +59,11 @@ class Level : GameObject
         if (rotationTracker == targetAngle)
         {
             if (Input.GetKeyDown(Key.RIGHT)) { targetAngle = 90;
-                SoundManager.rotate_right.play(0.5f, 0);
+                SoundManager.rotate_right.play(0.2f, 0);
                 rotationTracker = 0;
             }
             if (Input.GetKeyDown(Key.LEFT)) { targetAngle = -90;
-                SoundManager.rotate_left.play(0.5f, 0);
+                SoundManager.rotate_left.play(0.2f, 0);
                 rotationTracker = 0;
             }
         }
@@ -109,7 +107,6 @@ class Level : GameObject
     void Update()
     {
         RotateLevel();
-        BackgroundMusic();
     }
 
     void spawnSpikeObjects()
@@ -161,18 +158,5 @@ class Level : GameObject
     static bool Approx(float a, float b, float epsilon = 0.000001f)
     {
         return Mathf.Abs(a - b) < epsilon;
-    }
-
-    void BackgroundMusic()
-    {
-        float deltaTime = Time.deltaTime / 1000f;
-        timer -= deltaTime;
-
-        if (timer <= 0)
-        {
-            SoundManager.background_music.play(1f, 0);
-            timer = musicLoopNumber;
-        }
-        Console.WriteLine("music cooldown: " + timer);
     }
 }

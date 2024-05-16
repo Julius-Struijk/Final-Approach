@@ -11,6 +11,9 @@ public class MyGame : Game {
     string currentLevel;
     string nextLevel;
 
+    private float timer = 0;
+    private float musicLoopNumber = 282;
+
     public MyGame() : base(1920, 1080, false,false,-1,-1,true)
 	{
         targetFps = 60; // Consistent, non variable framerate
@@ -25,6 +28,8 @@ public class MyGame : Game {
 
 	void Update()
     {
+        BackgroundMusic();
+
         if(level != null)
         {
             // Checks whether the level has been won.
@@ -64,6 +69,19 @@ public class MyGame : Game {
             AddChild(level);
         }
         nextLevel = null;
+    }
+
+    void BackgroundMusic()
+    {
+        float deltaTime = Time.deltaTime / 1000f;
+        timer -= deltaTime;
+
+        if(timer <= 0)
+        {
+            SoundManager.background_music.play(1f, 0);
+            timer = musicLoopNumber;
+        }
+        Console.WriteLine("music cooldown: " + timer);
     }
 
 
