@@ -15,7 +15,7 @@ class Level : GameObject
     public string levelTileSet { get; private set; }
     Vec2 position = new Vec2();
     CogWheel cogWheel;
-    public TileSet tileSet { get; private set; }
+    public TileSet[] tileSets { get; private set; }
 
     public readonly CogWheel[] _movers;
     public readonly LineSegment[] _lines;
@@ -36,8 +36,11 @@ class Level : GameObject
         loader.autoInstance = true;
 
         loader.LoadObjectGroups(0);
-        tileSet = FindObjectOfType<TileSet>();
-        tileSet.FixOffset();
+        tileSets = FindObjectsOfType<TileSet>();
+        foreach (TileSet tileSet in tileSets)
+        {
+            tileSet.FixOffset();
+        }
         cogWheel = FindObjectOfType<CogWheel>();
         cogWheel.SetProperties();
         spawnPlatformObjects();
@@ -128,10 +131,15 @@ class Level : GameObject
     {
         // Check that prevents an automatic win when the positions are wrong as they are being spawned in.
         if (cogWheel.x - cogWheel._oldPosition.x > 600) { return false; }
-
-        else if(cogWheel.x > tileSet.x + tileSet.width || cogWheel.x < tileSet.x - tileSet.width || cogWheel.y > tileSet.y + tileSet.height || cogWheel.y < tileSet.y - tileSet.height)
+        else
         {
-            return true;
+            foreach (TileSet tileSet in tileSets)
+            {
+                if (cogWheel.x > tileSet.x + tileSet.width || cogWheel.x < tileSet.x - tileSet.width || cogWheel.y > tileSet.y + tileSet.height || cogWheel.y < tileSet.y - tileSet.height)
+                {
+                    return true;
+                }
+            }
         }
         return false;
     }
