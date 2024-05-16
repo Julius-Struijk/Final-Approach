@@ -149,7 +149,7 @@ class CogWheel : AnimationSprite
         if(damageCooldown >= 0)
         {
             damageCooldown -= deltaTime;
-            Console.WriteLine("cooldown: " + damageCooldown);
+            //Console.WriteLine("cooldown: " + damageCooldown);
         }
         Movement();
         Animation();
@@ -343,7 +343,6 @@ class CogWheel : AnimationSprite
             Vec2 unitNormal = col.normal.Normalized();
             velocity.Reflect(unitNormal, bounciness);
             CogWheel lineCap = (CogWheel)col.other;
-            Console.WriteLine("Linecap Type: {0}", lineCap.spawnType);
             if(lineCap.spawnType == typeof(Spikes))
             {
                 takeDamage = true;
@@ -369,33 +368,43 @@ class CogWheel : AnimationSprite
 
     void ChangeGravity()
     {
-        //Before Rotation Gravity Change
-        if(level.targetAngle == 0) { gravity = new Vec2(0, 9.81f); }
-        //if (Approx(level.targetAngle, 45, 0.5f)) { gravity = new Vec2(4.905f, 4.905f); }
-        if(level.targetAngle == 90) { gravity = new Vec2(9.81f, 0); }
-        //if (Approx(level.targetAngle, 135, 0.5f)) { gravity = new Vec2(4.905f, -4.905f); }
-        if(level.targetAngle == 180) { gravity = new Vec2(0, -9.81f); }
-        //if (Approx(level.targetAngle, -45, 0.5f)) { gravity = new Vec2(-4.905f, 4.905f); }
-        if(level.targetAngle == -90) { gravity = new Vec2(-9.81f, 0); }
-        //if (Approx(level.targetAngle, -135, 0.5f)) { gravity = new Vec2(-4.905f, -4.905f); }
+        //Before Rotation Gravity Change 90 Fixed Degrees
+        //if(Approx(level.targetAngle, 0, 0.5f)) { gravity = new Vec2(0, 9.81f); }
+        //if(Approx(level.targetAngle, 90, 0.5f)) { gravity = new Vec2(9.81f, 0); }
+        //if(Approx(level.targetAngle, 180, 0.5f)) { gravity = new Vec2(0, -9.81f); }
+        //if(Approx(level.targetAngle, -90, 0.5f)) { gravity = new Vec2(-9.81f, 0); }
 
+        //Before Rotation Gravity Change 90 Degrees Left or Right
+        if (level.rotationTracker == 1 || level.rotationTracker == -1)
+        {
+            if (level.targetAngle == 90)
+            {
+                // Going to 0
+                if (parent.rotation > -90 && parent.rotation < 0) { gravity = new Vec2(0, 9.81f); }
+                // Going to 90
+                if (parent.rotation > 0 && parent.rotation < 90) { gravity = new Vec2(9.81f, 0); }
+                // Going to 180
+                if (parent.rotation > 90 && parent.rotation < 180) { gravity = new Vec2(0, -9.81f); }
+                // Going to -90
+                if (parent.rotation > -180 && parent.rotation < -90) { gravity = new Vec2(-9.81f, 0); }
+            }
 
-        // After Rotation Gravity change
-        //if (Approx(parent.rotation, 0, 0.5f)) { gravity = new Vec2(0, 9.81f); }
-        //if (Approx(parent.rotation, 45, 0.5f)) { gravity = new Vec2(4.905f, 4.905f); }
-        //if (Approx(parent.rotation, 90, 0.5f)) { gravity = new Vec2(9.81f, 0); }
-        //if (Approx(parent.rotation, 135, 0.5f)) { gravity = new Vec2(4.905f, -4.905f); }
-        //if (Approx(parent.rotation, 180, 0.5f)) { gravity = new Vec2(0, -9.81f); }
-        //if (Approx(parent.rotation, -45, 0.5f)) { gravity = new Vec2(-4.905f, 4.905f); }
-        //if (Approx(parent.rotation, -90, 0.5f)) { gravity = new Vec2(-9.81f, 0); }
-        //if (Approx(parent.rotation, -135, 0.5f)) { gravity = new Vec2(-4.905f, -4.905f); }
-        //Console.WriteLine("Gravity changed to: {0}", gravity);
-        //Console.WriteLine("Rotation: {0}", parent.rotation);
+            if (level.targetAngle == -90)
+            {
+                // Going to 0
+                if (parent.rotation > 0 && parent.rotation < 90) { gravity = new Vec2(0, 9.81f); }
+                // Going to 90
+                if (parent.rotation > 90 && parent.rotation < 180) { gravity = new Vec2(9.81f, 0); }
+                // Going to -180
+                if (parent.rotation > -180 && parent.rotation < -90) { gravity = new Vec2(0, -9.81f); }
+                // Going to -90
+                if (parent.rotation > -90 && parent.rotation < 0) { gravity = new Vec2(-9.81f, 0); }
+            }
+        }
     }
 
     public void SetProperties()
     {
-        //Console.WriteLine("Properties set!");
         // Make the starting position of the ball match that of what is shown in Tiled.
         position = new Vec2(x - game.width / 2, y - game.height / 2);
     }
@@ -413,17 +422,25 @@ class CogWheel : AnimationSprite
             emptyHearts[i].visible = i > remainingHealth;
         }
 
-        if(takeDamage && damageCooldown <= 0)
+        if(takeDamage)
         {
-            health--;
+            if (damageCooldown <= 0)
+            {
+                health--;
+                damageCooldown = 2f;
+            }
             takeDamage = false;
-            damageCooldown = 2f;
         }
     }
     // Used to set which object spawned line caps.
     public void SetSpawnType(Type type)
     {
         spawnType = type;
+    }
+
+    static bool Approx(float a, float b, float epsilon = 0.000001f)
+    {
+        return Mathf.Abs(a - b) < epsilon;
     }
 
 }
