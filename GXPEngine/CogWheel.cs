@@ -76,7 +76,7 @@ class CogWheel : AnimationSprite
         AddChild(idleAnimation);
         UpdateScreenPosition();
 
-        for(int i = 0; i < maxHealth; i++)
+        for (int i = 0; i < maxHealth; i++)
         {
             heartEmpty = new Sprite("Assets/heartEmpty.png");
             game.AddChild(heartEmpty);
@@ -96,7 +96,7 @@ class CogWheel : AnimationSprite
     // This constructor is used for balls in Tiled.
     public CogWheel(string filename, int colls, int rows, TiledObject obj = null) : base(filename, colls, rows)
     {
-        if(obj != null)
+        if (obj != null)
         {
             // Default values are used for line caps.
             moving = obj.GetBoolProperty("moving", false);
@@ -126,7 +126,7 @@ class CogWheel : AnimationSprite
 
         UpdateScreenPosition();
 
-        for(int i = 0; i < maxHealth; i++)
+        for (int i = 0; i < maxHealth; i++)
         {
             heartEmpty = new Sprite("Assets/heartEmpty.png");
             game.AddChild(heartEmpty);
@@ -146,7 +146,7 @@ class CogWheel : AnimationSprite
     void Update()
     {
         float deltaTime = Time.deltaTime / 1000f;
-        if(damageCooldown >= 0)
+        if (damageCooldown >= 0)
         {
             damageCooldown -= deltaTime;
             //Console.WriteLine("cooldown: " + damageCooldown);
@@ -169,16 +169,17 @@ class CogWheel : AnimationSprite
     void Movement()
     {
         // Linecaps will be stationary which is why this exists.
-        if(moving)
+        if (moving)
         {
             level = (Level)parent;
 
-            if(firstTime)
+            if (firstTime)
             {
                 float deltaTime = Time.deltaTime / 1000f;
                 velocity += gravity * drag * characterMass * deltaTime;
                 //if(extraVelocity.x == 0 && extraVelocity.y == 0) { extraVelocity = velocity; }
-            } else { firstTime = true; }
+            }
+            else { firstTime = true; }
             _oldPosition = position;
 
             rotation = -parent.rotation;
@@ -196,10 +197,10 @@ class CogWheel : AnimationSprite
             position += velocity;
 
             CollisionInfo firstCollision = FindEarliestCollision();
-            if(firstCollision != null)
+            if (firstCollision != null)
             {
                 ResolveCollision(firstCollision);
-                if(firstCollision.timeOfImpact == 0 && firstTime)
+                if (firstCollision.timeOfImpact == 0 && firstTime)
                 {
                     firstTime = false;
                 }
@@ -211,7 +212,7 @@ class CogWheel : AnimationSprite
     void Animation()
     {
         AnimationSprite previousAnimation = currentAnimation;
-        switch(eState)
+        switch (eState)
         {
             case EState.Idle:
                 currentAnimation = idleAnimation;
@@ -220,9 +221,9 @@ class CogWheel : AnimationSprite
                 throw new ArgumentOutOfRangeException();
         }
 
-        if(currentAnimation != previousAnimation)
+        if (currentAnimation != previousAnimation)
         {
-            if(previousAnimation != null)
+            if (previousAnimation != null)
             {
                 previousAnimation.visible = false;
             }
@@ -230,10 +231,10 @@ class CogWheel : AnimationSprite
             currentAnimation.visible = true;
         }
 
-        if(counter >= 6)
+        if (counter >= 6)
         {
             counter = 0;
-            if(frame >= currentAnimation.frameCount)
+            if (frame >= currentAnimation.frameCount)
             {
                 frame = 0;
             }
@@ -247,9 +248,9 @@ class CogWheel : AnimationSprite
     CollisionInfo FindEarliestCollision()
     {
         // Check other movers:			
-        foreach(CogWheel mover in level._movers)
+        foreach (CogWheel mover in level._movers)
         {
-            if(mover != this)
+            if (mover != this)
             {
                 Vec2 relativePosition = position - mover.position;
 
@@ -257,7 +258,7 @@ class CogWheel : AnimationSprite
                 Vec2 b = new Vec2(2 * (relativePosition.Dot(velocity)));
                 Vec2 c = new Vec2(relativePosition.Dot(relativePosition) - (radius + mover.radius) * (radius + mover.radius));
                 float TOI = CalculateTOIBall(a, b, c);
-                if(TOI != 0)
+                if (TOI != 0)
                 {
                     return new CollisionInfo(relativePosition, mover, TOI);
                 }
@@ -265,13 +266,13 @@ class CogWheel : AnimationSprite
         }
 
 
-        foreach(LineSegment line in level._lines)
+        foreach (LineSegment line in level._lines)
         {
             //b.1
             Vec2 differenceVectorMovement = position - _oldPosition;
 
             float TOI = CalculateTOILine(line, differenceVectorMovement);
-            if(TOI != -2)
+            if (TOI != -2)
             {
                 return new CollisionInfo((line.end - line.start), line, TOI);
             }
@@ -281,13 +282,13 @@ class CogWheel : AnimationSprite
 
     float CalculateTOIBall(Vec2 a, Vec2 b, Vec2 c)
     {
-        if(a.x != 0)
+        if (a.x != 0)
         {
             float D = b.Dot(b) - 4 * a.Dot(c);
-            if(D >= 0)
+            if (D >= 0)
             {
                 float TOI = (b.Dot(new Vec2(-1, -1)) - Mathf.Sqrt(D)) / a.Dot(new Vec2(2, 2));
-                if(0 <= TOI && TOI < 1)
+                if (0 <= TOI && TOI < 1)
                 {
                     return TOI;
                 }
@@ -305,27 +306,29 @@ class CogWheel : AnimationSprite
         //a
         Vec2 differenceVector = new Vec2(position.x - line.start.x, position.y - line.start.y);
         float ballDistance = differenceVector.Dot((line.end - line.start).Normal()) - radius;
-        if(movementDistance > 0)
+        if (movementDistance > 0)
         {
             // Magic impossible number, so the value is assigned for the if check later.
             float TOI = 2;
-            if(ballDistance >= 0)
+            if (ballDistance >= 0)
             {
                 //t
                 TOI = ballDistance / movementDistance;
-            } else if(ballDistance >= -radius)
+            }
+            else if (ballDistance >= -radius)
             {
                 //t
                 TOI = 0;
-            } else { return -2; }
+            }
+            else { return -2; }
 
-            if(TOI <= 1)
+            if (TOI <= 1)
             {
                 Vec2 POI = position + TOI * velocity;
                 //d
                 Vec2 differenceVectorPOI = new Vec2(POI.x - line.start.x, POI.y - line.start.y);
                 float lineDistance = differenceVectorPOI.Dot((line.end - line.start).Normalized());
-                if(lineDistance >= 0 && lineDistance <= (line.end - line.start).Length())
+                if (lineDistance >= 0 && lineDistance <= (line.end - line.start).Length())
                 {
                     return TOI;
                 }
@@ -337,28 +340,37 @@ class CogWheel : AnimationSprite
 
     void ResolveCollision(CollisionInfo col)
     {
-        if(col.other is CogWheel)
+        if (col.other is CogWheel)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normalized();
             velocity.Reflect(unitNormal, bounciness);
             CogWheel lineCap = (CogWheel)col.other;
-            if(lineCap.spawnType == typeof(Spikes))
+            if (lineCap.spawnType == typeof(Spikes))
             {
                 takeDamage = true;
             }
-        } else if(col.other is BouncyWall wall)
+            if (lineCap.spawnType == typeof(Spring))
+            {
+                position += velocity * col.timeOfImpact;
+                unitNormal = col.normal.Normal();
+                velocity.Reflect(unitNormal, bounciness * 2);
+            }
+        }
+        else if (col.other is BouncyWall wall)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normal();
             velocity.Reflect(unitNormal, wall.bounciness);
-        } else if(col.other is SpikeWall spikeWall)
+        }
+        else if (col.other is SpikeWall spikeWall)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normal();
             velocity.Reflect(unitNormal, spikeWall.bounciness);
             takeDamage = true;
-        } else if(col.other is LineSegment)
+        }
+        else if (col.other is LineSegment)
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normal();
@@ -413,17 +425,17 @@ class CogWheel : AnimationSprite
     private void UpdateHearts()
     {
         int remainingHealth = health - 1;
-        for(int i = 0; i < maxHealth; i++)
+        for (int i = 0; i < maxHealth; i++)
         {
             fullHearts[i].visible = i <= remainingHealth;
         }
 
-        for(int i = emptyHearts.Count - 1; i >= 0; i--)
+        for (int i = emptyHearts.Count - 1; i >= 0; i--)
         {
             emptyHearts[i].visible = i > remainingHealth;
         }
 
-        if(takeDamage)
+        if (takeDamage)
         {
             if (damageCooldown <= 0)
             {

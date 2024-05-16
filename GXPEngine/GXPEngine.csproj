@@ -92,6 +92,7 @@
     <Compile Include="SoundManager.cs" />
     <Compile Include="Spikes.cs" />
     <Compile Include="SpikeWall.cs" />
+    <Compile Include="Spring.cs" />
     <Compile Include="TileSet.cs" />
     <Compile Include="Vec2.cs" />
   </ItemGroup>
