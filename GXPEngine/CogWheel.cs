@@ -20,7 +20,7 @@ class CogWheel : AnimationSprite
     public Type spawnType { get; private set; }
 
     private int maxHealth;
-    private float drag = 0.05f;
+    private float drag = 0.04f;
     private float characterMass = 40f;
     private float damageCooldown = 2f;
     float bounciness = 0.6f;
@@ -395,6 +395,7 @@ class CogWheel : AnimationSprite
         //if(Approx(level.targetAngle, -90, 0.5f)) { gravity = new Vec2(-9.81f, 0); }
 
         //Before Rotation Gravity Change 90 Degrees Left or Right
+        // This make the gravity change only happen once near the start
         if (level.rotationTracker == 1 || level.rotationTracker == -1)
         {
             if (level.targetAngle == 90)

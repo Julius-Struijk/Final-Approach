@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 using GXPEngine;
 using TiledMapParser;
 
-class TileSet : Sprite
+class TileSet : AnimationSprite
 {
     public string nextLevel {  get; private set; }
-    public TileSet(TiledObject obj = null) : base("Assets/Tileset Level 1.png")
+    public TileSet(string filename, int colls, int rows, TiledObject obj = null) : base(filename, colls, rows)
     {
         if (obj != null)
         {
             nextLevel = obj.GetStringProperty("nextLevel", "level 1.tmx");
+            //Console.WriteLine(levelIndex);
         }
+        SetOrigin(width / 2, height / 2);
     }
 
     public void FixOffset()
