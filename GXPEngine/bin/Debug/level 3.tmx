@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#00ff00" nextlayerid="2" nextobjectid="1">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#b9b9b9" nextlayerid="3" nextobjectid="34">
  <tileset firstgid="1" name="edited tileset" tilewidth="32" tileheight="32" tilecount="27" columns="9">
   <image source="Assets/tile set.png" width="288" height="96"/>
  </tileset>
- <layer id="1" name="Tile Layer 1" width="60" height="34">
+ <tileset firstgid="28" name="boxFrame" tilewidth="2048" tileheight="2048" tilecount="1" columns="1">
+  <image source="Assets/boxFrame.png" trans="ff00ff" width="2048" height="2048"/>
+ </tileset>
+ <tileset firstgid="29" name="Saw" tilewidth="514" tileheight="262" tilecount="6" columns="6">
+  <image source="Assets/Saw.png" trans="ff00ff" width="3084" height="262"/>
+ </tileset>
+ <tileset firstgid="35" name="Spring Subtle" tilewidth="514" tileheight="514" tilecount="12" columns="12">
+  <image source="Assets/springSubtle.png" trans="ff00ff" width="6168" height="514"/>
+ </tileset>
+ <tileset firstgid="47" name="Levels" tilewidth="819" tileheight="885" tilecount="12" columns="12">
+  <image source="Assets/Levels.png" trans="ff00ff" width="10593" height="885"/>
+ </tileset>
+ <tileset firstgid="59" name="Ball Placeholder" tilewidth="502" tileheight="502" tilecount="8" columns="8">
+  <image source="Assets/placeholderPlayerNoSpace.png" trans="ff00ff" width="4016" height="502"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="60" height="34" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -41,4 +56,46 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="2" name="Objects">
+  <object id="1" name="BoxFrame" type="TileSet" gid="28" x="556.67" y="948.33" width="810.667" height="810.667"/>
+  <object id="32" name="Level 3" type="TileSet" gid="49" x="614" y="892.863" width="696.282" height="698.363">
+   <properties>
+    <property name="nextLevel" value="level 1.tmx"/>
+   </properties>
+  </object>
+  <object id="2" name="Platform 1" type="Platform" x="612.961" y="194.409" width="348.906" height="34.3415"/>
+  <object id="3" name="Platform 1" type="Platform" x="612.857" y="228.969" width="35.1426" height="139.383"/>
+  <object id="4" name="Platform 1" type="Platform" x="612.994" y="368.752" width="104.535" height="34.6136"/>
+  <object id="5" name="Platform 1" type="Platform" x="612.994" y="403.622" width="139.368" height="278.44"/>
+  <object id="6" name="Platform 1" type="Platform" x="613.016" y="682.402" width="69.7028" height="208.685"/>
+  <object id="7" name="Platform 1" type="Platform" x="683.12" y="682.075" width="104.123" height="34.6136"/>
+  <object id="8" name="Platform 1" type="Platform" x="787.428" y="542.642" width="34.3262" height="173.943"/>
+  <object id="9" name="Platform 1" type="Platform" x="787.337" y="368.299" width="242.413" height="174.623"/>
+  <object id="10" name="Platform 1" type="Platform" x="1136.07" y="368.936" width="103.81" height="173.832"/>
+  <object id="11" name="Platform 1" type="Platform" x="1030.17" y="403.449" width="105.896" height="139.474"/>
+  <object id="12" name="Platform 1" type="Platform" x="961.647" y="194.999" width="68.9112" height="138.484"/>
+  <object id="13" name="Platform 1" type="Platform" x="1030.85" y="194.768" width="104.671" height="104.035"/>
+  <object id="14" name="Platform 1" type="Platform" x="1135.47" y="194.496" width="139.12" height="138.892"/>
+  <object id="15" name="Platform 1" type="Platform" x="1274.83" y="194.543" width="35.1426" height="696.437"/>
+  <object id="16" name="Platform 1" type="Platform" x="857.199" y="577.561" width="417.416" height="34.6136"/>
+  <object id="17" name="Platform 1" type="Platform" x="856.752" y="612.292" width="139.386" height="104.431"/>
+  <object id="18" name="Platform 1" type="Platform" x="1100.56" y="612.171" width="173.928" height="35.1578"/>
+  <object id="19" name="Platform 1" type="Platform" x="749.062" y="855.884" width="525.706" height="35.1578"/>
+  <object id="20" name="Platform 1" type="Platform" x="682.915" y="786.662" width="556.909" height="35.1578"/>
+  <object id="21" name="Platform 1" type="Platform" x="1135.36" y="682.213" width="104.752" height="104.43"/>
+  <object id="22" name="Platform 1" type="Platform" x="1031.15" y="716.592" width="103.663" height="69.5981"/>
+  <object id="24" name="Platform 1" type="Platform" x="856.49" y="751.475" width="174.398" height="35.3063"/>
+  <object id="25" name="Spike 1" type="Spikes" gid="29" x="891.776" y="368.461" width="34.8913" height="17.7851"/>
+  <object id="26" name="Spike 2" type="Spikes" gid="29" x="960.73" y="229.901" width="33.9886" height="17.3249" rotation="180"/>
+  <object id="28" name="Spike 3" type="Spikes" gid="29" x="925.429" y="229.359" width="67.7686" height="34.5437" rotation="180"/>
+  <object id="29" name="Spring Subtle 1" type="Spring" gid="38" x="717.778" y="403.607" width="34.8901" height="34.8901"/>
+  <object id="30" name="Spring Subtle 2" type="Spring" gid="38" x="1100.27" y="368.569" width="34.8902" height="34.8902" rotation="-90"/>
+  <object id="33" name="Player" type="CogWheel" gid="59" x="756.75" y="680.5" width="26" height="26">
+   <properties>
+    <property name="health" type="int" value="3"/>
+    <property name="moving" type="bool" value="true"/>
+    <property name="radius" type="int" value="13"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

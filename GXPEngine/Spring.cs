@@ -57,26 +57,50 @@ public class Spring : AnimationSprite
         bottomRight.SetSpawnType(typeof(Spring));
         parent.AddChild(bottomRight);
 
-        Top = new BouncyWall(new Vec2(x + radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y - radiusHeight), 1.2f, 0xff00ff00, 3);
-        parent.AddChild(Top);
+        // Change which wall is considered the "top" and gets the bouncy property based on the rotation of the spring.
+        if (rotation == 0)
+        {
+            Top = new BouncyWall(new Vec2(x + radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y - radiusHeight), 1.2f, 0xff00ff00, 1);
+            parent.AddChild(Top);
+        }
+        else
+        {
+            LineSegment Top = new LineSegment(new Vec2(x + radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y - radiusHeight), 0xff00ff00, 3);
+            parent.AddChild(Top);
+        }
 
-        Bottom = new BouncyWall(new Vec2(x - radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y + radiusHeight), 1.2f, 0xff00ff00, 3);
-        parent.AddChild(Bottom);
+        if (rotation == 90)
+        {
+            Right = new BouncyWall(new Vec2(x + radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y - radiusHeight), 1.2f, 0xff00ff00, 1);
+            parent.AddChild(Right);
+        }
+        else
+        {
+            LineSegment Right = new LineSegment(new Vec2(x + radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y - radiusHeight), 0xff00ff00, 3);
+            parent.AddChild(Right);
+        }
 
-        //LineSegment Bottom = new LineSegment(new Vec2(x - radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y + radiusHeight), 0xff00ff00, 3);
-        //parent.AddChild(Bottom);
+        if (rotation == -90)
+        {
+            Left = new BouncyWall(new Vec2(x - radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y + radiusHeight), 1.2f, 0xff00ff00, 1);
+            parent.AddChild(Left);
+        }
+        else
+        {
+            LineSegment Left = new LineSegment(new Vec2(x - radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y + radiusHeight), 0xff00ff00, 3);
+            parent.AddChild(Left);
+        }
 
-        //LineSegment Left = new LineSegment(new Vec2(x - radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y + radiusHeight), 0xff00ff00, 3);
-        //parent.AddChild(Left);
-
-        //LineSegment Right = new LineSegment(new Vec2(x + radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y - radiusHeight), 0xff00ff00, 3);
-        //parent.AddChild(Right);
-
-        Left = new BouncyWall(new Vec2(x - radiusWidth, y - radiusHeight), new Vec2(x - radiusWidth, y + radiusHeight), 1.2f, 0xff00ff00, 3);
-        parent.AddChild(Left);
-
-        Right = new BouncyWall(new Vec2(x + radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y - radiusHeight), 1.2f, 0xff00ff00, 3);
-        parent.AddChild(Right);
+        if (rotation == 180)
+        {
+            Bottom = new BouncyWall(new Vec2(x - radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y + radiusHeight), 1.2f, 0xff00ff00, 1);
+            parent.AddChild(Bottom);
+        }
+        else
+        {
+            LineSegment Bottom = new LineSegment(new Vec2(x - radiusWidth, y + radiusHeight), new Vec2(x + radiusWidth, y + radiusHeight), 0xff00ff00, 3);
+            parent.AddChild(Bottom);
+        }
     }
 
     void Update()

@@ -26,7 +26,7 @@ class Platform : Sprite
     //    y = pPosition.y + radiusHeight;
     //}
 
-    public Platform(TiledObject obj=null) : base("Assets/greenButton.png")
+    public Platform(TiledObject obj=null) : base("Assets/boxFrame.png")
     {
         SetOrigin(width / 2, height / 2);
         //x = pPosition.x + radiusWidth;

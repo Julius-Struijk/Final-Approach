@@ -15,10 +15,7 @@
  <tileset firstgid="54" name="boxFrame" tilewidth="2048" tileheight="2048" tilecount="1" columns="1">
   <image source="Assets/boxFrame.png" trans="ff00ff" width="2048" height="2048"/>
  </tileset>
- <tileset firstgid="55" name="spring" tilewidth="512" tileheight="512" tilecount="12" columns="12">
-  <image source="Assets/spring.png" trans="ff00ff" width="6144" height="512"/>
- </tileset>
- <tileset firstgid="67" name="Spring Subtle" tilewidth="514" tileheight="514" tilecount="12" columns="12">
+ <tileset firstgid="55" name="Spring Subtle" tilewidth="514" tileheight="514" tilecount="12" columns="12">
   <image source="Assets/springSubtle.png" trans="ff00ff" width="6168" height="514"/>
  </tileset>
  <layer id="1" name="Tile Set" class="0" width="60" height="34" visible="0">
@@ -60,8 +57,8 @@
 </data>
  </layer>
  <objectgroup id="2" name="Objects">
-  <object id="26" name="BoxFrame" type="TileSet" gid="54" x="550.667" y="948.333" width="816.667" height="816.667"/>
-  <object id="24" name="Level 1" type="TileSet" gid="42" x="609.372" y="891.997" width="700.778" height="700.654" rotation="0.138458" visible="0">
+  <object id="26" name="BoxFrame" type="TileSet" gid="54" x="554.167" y="948.333" width="813.167" height="813.167"/>
+  <object id="24" name="Level 1" type="TileSet" gid="42" x="609.372" y="891.997" width="700.778" height="700.654" rotation="0.138458">
    <properties>
     <property name="nextLevel" value="level 2.tmx"/>
    </properties>
@@ -88,6 +85,6 @@
    </properties>
   </object>
   <object id="18" name="Spike 1" type="Spikes" gid="36" x="854.387" y="744.698" width="68.6095" height="34.9722" rotation="90"/>
-  <object id="29" name="Spike Subtle" type="Spring" gid="70" x="854.25" y="814" width="42.4167" height="42.4167" rotation="90"/>
+  <object id="29" name="Spike Subtle" type="Spring" gid="58" x="854.25" y="814" width="42.4167" height="42.4167" rotation="90"/>
  </objectgroup>
 </map>

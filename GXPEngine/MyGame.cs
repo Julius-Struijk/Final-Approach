@@ -81,7 +81,7 @@ public class MyGame : Game {
             SoundManager.background_music.play(1f, 0);
             timer = musicLoopNumber;
         }
-        Console.WriteLine("music cooldown: " + timer);
+        //Console.WriteLine("music cooldown: " + timer);
     }
 
 

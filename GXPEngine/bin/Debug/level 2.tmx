@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#bababa" nextlayerid="3" nextobjectid="38">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#bababa" nextlayerid="3" nextobjectid="43">
  <tileset firstgid="1" name="edited tileset" tilewidth="32" tileheight="32" tilecount="27" columns="9">
   <image source="Assets/tile set.png" width="288" height="96"/>
  </tileset>
@@ -11,6 +11,12 @@
  </tileset>
  <tileset firstgid="42" name="Levels" tilewidth="819" tileheight="885" tilecount="12" columns="12">
   <image source="Assets/Levels.png" trans="ff00ff" width="10593" height="885"/>
+ </tileset>
+ <tileset firstgid="54" name="boxFrame" tilewidth="2048" tileheight="2048" tilecount="1" columns="1">
+  <image source="Assets/boxFrame.png" trans="ff00ff" width="2048" height="2048"/>
+ </tileset>
+ <tileset firstgid="55" name="Spring Subtle" tilewidth="514" tileheight="514" tilecount="12" columns="12">
+  <image source="Assets/springSubtle.png" trans="ff00ff" width="6168" height="514"/>
  </tileset>
  <layer id="1" name="Tile Layer 1" class="TileSet" width="60" height="34" visible="0">
   <data encoding="csv">
@@ -51,9 +57,10 @@
 </data>
  </layer>
  <objectgroup id="2" name="Objects">
+  <object id="38" name="BoxFrame" type="TileSet" gid="54" x="556.67" y="948.33" width="810.667" height="810.667"/>
   <object id="37" name="Level 2" type="TileSet" gid="43" x="611" y="897.667" width="699.535" height="703.667">
    <properties>
-    <property name="nextLevel" value="level 1.tmx"/>
+    <property name="nextLevel" value="level 3.tmx"/>
    </properties>
   </object>
   <object id="5" name="Platform 1" type="Platform" x="608.929" y="192.913" width="703.035" height="35.8824"/>
@@ -89,5 +96,7 @@
   <object id="29" name="Spike 3" type="Spikes" gid="28" x="1031.43" y="859.979" width="68.349" height="34.8394"/>
   <object id="30" name="Spike 4" type="Spikes" gid="28" x="1101.47" y="859.792" width="68.349" height="34.8394"/>
   <object id="31" name="Spike 5" type="Spikes" gid="28" x="1171.61" y="859.609" width="68.349" height="34.8394"/>
+  <object id="40" name="Spike Subtle 1" type="Spring" gid="58" x="1092.83" y="229.25" width="42.4167" height="42.4167" rotation="180"/>
+  <object id="41" name="Spike Subtle 2" type="Spring" gid="58" x="886.339" y="514.403" width="42.4167" height="42.4167" rotation="-90"/>
  </objectgroup>
 </map>
