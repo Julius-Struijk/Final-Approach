@@ -23,7 +23,7 @@ class CogWheel : AnimationSprite
     private float drag = 0.05f;
     private float characterMass = 40f;
     private float damageCooldown = 2f;
-    float bounciness = 0.98f;
+    float bounciness = 0.6f;
     //float oldRotation = 0;
 
     bool firstTime = true;
@@ -199,11 +199,17 @@ class CogWheel : AnimationSprite
             CollisionInfo firstCollision = FindEarliestCollision();
             if (firstCollision != null)
             {
+                if (velocity.Length() <= -11f || velocity.Length() >= 11f)
+                {
+                    SoundManager.Hitting_surface_at_high_speed_sound.play(0.5f, 0);
+                }
                 ResolveCollision(firstCollision);
                 if (firstCollision.timeOfImpact == 0 && firstTime)
                 {
                     firstTime = false;
                 }
+
+
             }
             UpdateScreenPosition();
         }
@@ -355,6 +361,7 @@ class CogWheel : AnimationSprite
                 position += velocity * col.timeOfImpact;
                 unitNormal = col.normal.Normal();
                 velocity.Reflect(unitNormal, bounciness * 2);
+                SoundManager.spring_sound.play(0.5f, 0);
             }
         }
         else if (col.other is BouncyWall wall)
@@ -362,6 +369,7 @@ class CogWheel : AnimationSprite
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normal();
             velocity.Reflect(unitNormal, wall.bounciness);
+            SoundManager.spring_sound.play(0.5f, 0);
         }
         else if (col.other is SpikeWall spikeWall)
         {
@@ -439,6 +447,7 @@ class CogWheel : AnimationSprite
             if (damageCooldown <= 0)
             {
                 health--;
+                SoundManager.player_taking_damage.play(0.5f, 0);
                 damageCooldown = 2f;
             }
             takeDamage = false;

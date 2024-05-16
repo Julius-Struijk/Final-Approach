@@ -56,9 +56,11 @@ class Level : GameObject
         if (rotationTracker == targetAngle)
         {
             if (Input.GetKeyDown(Key.RIGHT)) { targetAngle = 90;
+                //SoundManager.rotate_right.play(0.5f, 0);
                 rotationTracker = 0;
             }
             if (Input.GetKeyDown(Key.LEFT)) { targetAngle = -90;
+                //SoundManager.rotate_left.play(0.5f, 0);
                 rotationTracker = 0;
             }
         }
@@ -138,6 +140,7 @@ class Level : GameObject
     {
         if(cogWheel.health == 0)
         {
+            SoundManager.Death_sound.play(0.5f, 0);
             return true;
         }
         return false;

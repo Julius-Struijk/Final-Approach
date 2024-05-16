@@ -2,7 +2,12 @@
 using GXPEngine;
 public class SoundManager
 {
-    public static SoundManager test = new SoundManager("Sounds/test.wav", 0 , 0);
+    public static SoundManager Death_sound = new SoundManager("Sounds/Death_sound.wav", 0, 0); //Implemented
+    public static SoundManager Hitting_surface_at_high_speed_sound = new SoundManager("Sounds/Hitting_surface_at_high_speed_sound.wav", 0, 0); //Implemented
+    public static SoundManager player_taking_damage = new SoundManager("Sounds/player_taking_damage.wav", 0, 0); //Implemented
+    public static SoundManager rotate_left = new SoundManager("Sounds/rotate_left.wav", 0, 0); //Implemented
+    public static SoundManager rotate_right = new SoundManager("Sounds/rotate_right.wav", 0, 0); //Implemented
+    public static SoundManager spring_sound = new SoundManager("Sounds/spring_sound.wav", 0, 0); //Implemented
 
     private Sound storedSound;
     private float defaultVolume;
