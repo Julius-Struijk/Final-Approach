@@ -47,7 +47,7 @@ class CogWheel : AnimationSprite
 
     AnimationSprite currentAnimation;
     AnimationSprite idleAnimation;
-    //AnimationSprite takeDamageAnimation = new AnimationSprite("animation", 1, 1);
+    AnimationSprite takeDamageAnimation;
 
     public EState eState;
     Level level;
@@ -63,9 +63,13 @@ class CogWheel : AnimationSprite
         moving = pMoving;
         alpha = 0;
 
-        idleAnimation = new AnimationSprite("Assets/placeholderPlayerNoSpace.png", 8, 1);
+        idleAnimation = new AnimationSprite("Assets/playerIdle.png", 24, 1);
         idleAnimation.width = radius * 2;
         idleAnimation.height = radius * 2;
+
+        takeDamageAnimation = new AnimationSprite("Assets/playerHurt.png", 24, 1);
+        takeDamageAnimation.width = radius * 2;
+        takeDamageAnimation.height = radius * 2;
 
         this.health = health;
         this.maxHealth = health;
@@ -73,7 +77,9 @@ class CogWheel : AnimationSprite
         eState = EState.Idle;
 
         idleAnimation.visible = false;
+        takeDamageAnimation .visible = false;
         AddChild(idleAnimation);
+        AddChild(takeDamageAnimation);
         UpdateScreenPosition();
 
         for (int i = 0; i < maxHealth; i++)
@@ -114,15 +120,21 @@ class CogWheel : AnimationSprite
 
         eState = EState.Idle;
 
-        idleAnimation = new AnimationSprite("Assets/placeholderPlayerNoSpace.png", 8, 1);
+        idleAnimation = new AnimationSprite("Assets/playerIdle.png", 24, 1);
 
         // For some reason the size and offset of the animation does need the width of the actual sprite instead of the regular width. But this only happens in Tiled, not through GXP.
         tiledSpriteRadius = width;
         idleAnimation.width = tiledSpriteRadius;
         idleAnimation.height = tiledSpriteRadius;
 
+        takeDamageAnimation = new AnimationSprite("Assets/playerHurt.png", 24, 1);
+        takeDamageAnimation.width = radius * 2;
+        takeDamageAnimation.height = radius * 2;
+
         idleAnimation.visible = false;
+        takeDamageAnimation.visible = false;
         AddChild(idleAnimation);
+        AddChild(takeDamageAnimation);
 
         UpdateScreenPosition();
 
@@ -164,6 +176,8 @@ class CogWheel : AnimationSprite
 
         idleAnimation.x = -tiledSpriteRadius / 2;
         idleAnimation.y = -tiledSpriteRadius / 2;
+        takeDamageAnimation.x = -tiledSpriteRadius / 2;
+        takeDamageAnimation.y = -tiledSpriteRadius / 2;
     }
 
     void Movement()
@@ -217,6 +231,9 @@ class CogWheel : AnimationSprite
             case EState.Idle:
                 currentAnimation = idleAnimation;
                 break;
+            case EState.TakeDamage:
+                currentAnimation = takeDamageAnimation;
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -229,6 +246,7 @@ class CogWheel : AnimationSprite
             }
 
             currentAnimation.visible = true;
+            Console.WriteLine("Changing animation to: {0}", currentAnimation);
         }
 
         if (counter >= 6)
@@ -439,6 +457,7 @@ class CogWheel : AnimationSprite
         {
             if (damageCooldown <= 0)
             {
+                eState = EState.TakeDamage;
                 health--;
                 damageCooldown = 2f;
             }

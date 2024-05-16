@@ -51,7 +51,7 @@
 </data>
  </layer>
  <objectgroup id="2" name="Objects">
-  <object id="24" name="Level 1" type="TileSet" gid="42" x="609.372" y="891.997" width="703.443" height="700.654" rotation="0.138458">
+  <object id="24" name="Level 1" type="TileSet" gid="42" x="609.372" y="891.997" width="700.778" height="700.654" rotation="0.138458">
    <properties>
     <property name="nextLevel" value="level 2.tmx"/>
    </properties>

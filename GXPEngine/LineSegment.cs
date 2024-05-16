@@ -27,15 +27,17 @@ namespace GXPEngine
 			color = pColor;
 			lineWidth = pLineWidth;
 		}
-	
+
 		//------------------------------------------------------------------------------------------------------------------------
 		//														RenderSelf()
 		//------------------------------------------------------------------------------------------------------------------------
-		//override protected void RenderSelf(GLContext glContext) {
-		//	if (game != null) {
-		//		Gizmos.RenderLine(start.x, start.y, end.x, end.y, color, lineWidth);
-		//	}
-		//}
+		override protected void RenderSelf(GLContext glContext)
+		{
+			if (game != null)
+			{
+				Gizmos.RenderLine(start.x, start.y, end.x, end.y, color, lineWidth);
+			}
+		}
 	}
 }
 
