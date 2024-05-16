@@ -144,7 +144,7 @@ class CogWheel : AnimationSprite
         {
             heartEmpty = new Sprite("Assets/heartEmpty.png");
             game.AddChild(heartEmpty);
-            heartEmpty.SetXY(225, 205 * i + 385);
+            heartEmpty.SetXY(225, 105 * i + 385);
             emptyHearts.Add(heartEmpty);
             heartEmpty.scale = 0.2f;
             heartEmpty.visible = false;
@@ -212,13 +212,14 @@ class CogWheel : AnimationSprite
             ChangeGravity();
 
             position += velocity;
+            Console.WriteLine(velocity.Length());
 
             CollisionInfo firstCollision = FindEarliestCollision();
             if (firstCollision != null)
             {
-                if (velocity.Length() <= -11f || velocity.Length() >= 11f)
+                if (velocity.Length() <= -8f || velocity.Length() >= 8f)
                 {
-                    SoundManager.Hitting_surface_at_high_speed_sound.play(0.5f, 0);
+                    SoundManager.Hitting_surface_at_high_speed_sound.play(0.1f, 0);
                 }
                 ResolveCollision(firstCollision);
                 if (firstCollision.timeOfImpact == 0 && firstTimeCounter == 0)

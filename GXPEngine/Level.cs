@@ -60,11 +60,11 @@ class Level : GameObject
         if (rotationTracker == targetAngle)
         {
             if (Input.GetKeyDown(Key.RIGHT)) { targetAngle = 90;
-                //SoundManager.rotate_right.play(0.5f, 0);
+                SoundManager.rotate_right.play(0.2f, 0);
                 rotationTracker = 0;
             }
             if (Input.GetKeyDown(Key.LEFT)) { targetAngle = -90;
-                //SoundManager.rotate_left.play(0.5f, 0);
+                SoundManager.rotate_left.play(0.2f, 0);
                 rotationTracker = 0;
             }
         }
@@ -146,6 +146,7 @@ class Level : GameObject
             {
                 if (cogWheel.x > tileSet.x + tileSet.width || cogWheel.x < tileSet.x - tileSet.width || cogWheel.y > tileSet.y + tileSet.height || cogWheel.y < tileSet.y - tileSet.height)
                 {
+                    SoundManager.victory_sound.play(0.5f, 0);
                     return true;
                 }
             }
