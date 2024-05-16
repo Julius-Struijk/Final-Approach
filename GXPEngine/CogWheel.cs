@@ -163,7 +163,6 @@ class CogWheel : AnimationSprite
         if (damageCooldown >= 0)
         {
             damageCooldown -= deltaTime;
-            //Console.WriteLine("cooldown: " + damageCooldown);
         }
         Movement();
         Animation();
@@ -212,7 +211,6 @@ class CogWheel : AnimationSprite
             ChangeGravity();
 
             position += velocity;
-            Console.WriteLine(velocity.Length());
 
             CollisionInfo firstCollision = FindEarliestCollision();
             if (firstCollision != null)

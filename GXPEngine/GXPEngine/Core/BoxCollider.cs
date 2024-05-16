@@ -260,13 +260,11 @@ namespace GXPEngine.Core
 			Vector2 normal=new Vector2();
 			Vector2 point=new Vector2();
 			if (other is BoxCollider) {
-				//Console.WriteLine ("\n\n===== Computing collision data:\n");
 				Vector2[] c = _owner.GetExtents();
 				if (c == null) return null;
 				Vector2[] d = ((BoxCollider)other)._owner.GetExtents();
 				if (d == null) return null;
 
-				//Console.WriteLine ("\nSide vectors of this:\n {0},{1} and {2},{3}",
 				//	c[1].x-c[0].x,c[1].y-c[0].y,c[3].x-c[0].x,c[3].y-c[0].y
 				//);
 
@@ -287,7 +285,6 @@ namespace GXPEngine.Core
 					true, ref penetrationDepth, ref normal, ref point))
 					return null;
 
-				//Console.WriteLine ("\nSide vectors of other:\n {0},{1} and {2},{3}",
 				//	d[1].x-d[0].x,d[1].y-d[0].y,d[3].x-d[0].x,d[3].y-d[0].y
 				//);
 				// normals of other vs points of this:
@@ -353,9 +350,7 @@ namespace GXPEngine.Core
 			bool updateNormal = false;
 			float lenD = Mathf.Sqrt (dx * dx + dy * dy);
 
-			//Console.WriteLine ("\n  considering normal: {0},{1}\n  minT, maxT: {2},{3}\n  intersection candidates: {4},{5}",
-			//	nx,ny,minT,maxT,(1-minT)*lenD,maxT*lenD
-			//);
+
 			if (lenD == 0)
 				lenD = 1; // hm
 			if (maxT*lenD < minPenetrationDepth) {
@@ -373,11 +368,8 @@ namespace GXPEngine.Core
 				float len = invertNormal ? -Mathf.Sqrt (nx * nx + ny * ny) : Mathf.Sqrt (nx * nx + ny * ny);
 				normal.x = nx / len;
 				normal.y = ny / len;
-				//Console.WriteLine ("NEW BEST");
 			} else {
-				//Console.WriteLine ("NO UPDATE");
 			}
-			//Console.WriteLine (" (check:) best normal: "+normal);
 			return true;
 		}
 	}
