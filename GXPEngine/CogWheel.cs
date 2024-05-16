@@ -211,11 +211,12 @@ class CogWheel : AnimationSprite
             ChangeGravity();
 
             position += velocity;
+            Console.WriteLine(velocity.Length());
 
             CollisionInfo firstCollision = FindEarliestCollision();
             if (firstCollision != null)
             {
-                if (velocity.Length() <= -11f || velocity.Length() >= 11f)
+                if (velocity.Length() <= -8f || velocity.Length() >= 8f)
                 {
                     SoundManager.Hitting_surface_at_high_speed_sound.play(0.5f, 0);
                 }
