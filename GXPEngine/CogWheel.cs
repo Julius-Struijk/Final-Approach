@@ -144,7 +144,7 @@ class CogWheel : AnimationSprite
         {
             heartEmpty = new Sprite("Assets/heartEmpty.png");
             game.AddChild(heartEmpty);
-            heartEmpty.SetXY(225, 205 * i + 385);
+            heartEmpty.SetXY(225, 105 * i + 385);
             emptyHearts.Add(heartEmpty);
             heartEmpty.scale = 0.2f;
             heartEmpty.visible = false;

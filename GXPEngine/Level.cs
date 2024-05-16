@@ -137,6 +137,7 @@ class Level : GameObject
             {
                 if (cogWheel.x > tileSet.x + tileSet.width || cogWheel.x < tileSet.x - tileSet.width || cogWheel.y > tileSet.y + tileSet.height || cogWheel.y < tileSet.y - tileSet.height)
                 {
+                    SoundManager.victory_sound.play(0.5f, 0);
                     return true;
                 }
             }
