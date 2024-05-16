@@ -20,13 +20,14 @@ namespace GXPEngine
 		{
 		}
 
-		public LineSegment (Vec2 pStart, Vec2 pEnd, uint pColor = 0xffffffff, uint pLineWidth = 1)
+		public LineSegment (Vec2 pStart, Vec2 pEnd, uint pColor = 0xffffffff , uint pLineWidth = 1)
 		{
 			start = pStart;
 			end = pEnd;
 			color = pColor;
 			lineWidth = pLineWidth;
-		}
+            visible = false;
+        }
 
 		//------------------------------------------------------------------------------------------------------------------------
 		//														RenderSelf()
