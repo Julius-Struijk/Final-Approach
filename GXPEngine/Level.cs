@@ -11,7 +11,7 @@ using TiledMapParser;
 class Level : GameObject
 {
     private float timer = 0;
-    private float musicLoopNumber = 316;
+    private float musicLoopNumber = 282;
     public float targetAngle { get; private set; }
     public int rotationTracker { get; private set; }
     public string levelTileSet { get; private set; }
@@ -173,5 +173,6 @@ class Level : GameObject
             SoundManager.background_music.play(1f, 0);
             timer = musicLoopNumber;
         }
+        Console.WriteLine("music cooldown: " + timer);
     }
 }
