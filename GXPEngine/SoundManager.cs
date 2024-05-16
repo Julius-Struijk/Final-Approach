@@ -4,6 +4,7 @@ public class SoundManager
 {
     public static SoundManager Death_sound = new SoundManager("Sounds/Death_sound.wav", 0, 0); //Implemented
     public static SoundManager Hitting_surface_at_high_speed_sound = new SoundManager("Sounds/Hitting_surface_at_high_speed_sound.wav", 0, 0); //Implemented
+    public static SoundManager player_moving_sound_loop_bit = new SoundManager("Sounds/player_moving_sound_loop_bit.wav", 0, 0); 
     public static SoundManager player_taking_damage = new SoundManager("Sounds/player_taking_damage.wav", 0, 0); //Implemented
     public static SoundManager rotate_left = new SoundManager("Sounds/rotate_left.wav", 0, 0); //Implemented
     public static SoundManager rotate_right = new SoundManager("Sounds/rotate_right.wav", 0, 0); //Implemented

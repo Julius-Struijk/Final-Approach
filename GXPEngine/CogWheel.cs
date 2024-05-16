@@ -64,10 +64,15 @@ class CogWheel : AnimationSprite
         alpha = 0;
 
         idleAnimation = new AnimationSprite("Assets/playerIdle.png", 24, 1);
-        idleAnimation.width = radius * 2;
-        idleAnimation.height = radius * 2;
+        AddChild(idleAnimation);
+        idleAnimation.visible = false;
 
         takeDamageAnimation = new AnimationSprite("Assets/playerHurt.png", 24, 1);
+        AddChild(takeDamageAnimation);
+        takeDamageAnimation.visible = false;
+
+        idleAnimation.width = radius * 2;
+        idleAnimation.height = radius * 2;
         takeDamageAnimation.width = radius * 2;
         takeDamageAnimation.height = radius * 2;
 
@@ -75,11 +80,7 @@ class CogWheel : AnimationSprite
         this.maxHealth = health;
 
         eState = EState.Idle;
-
-        idleAnimation.visible = false;
-        takeDamageAnimation .visible = false;
-        AddChild(idleAnimation);
-        AddChild(takeDamageAnimation);
+        
         UpdateScreenPosition();
 
         for (int i = 0; i < maxHealth; i++)
@@ -88,7 +89,6 @@ class CogWheel : AnimationSprite
             game.AddChild(heartEmpty);
             emptyHearts.Add(heartEmpty);
             heartEmpty.scale = 0.2f;
-            heartEmpty.SetXY(1600 + 100 * i, 25);
             heartEmpty.visible = false;
             heartFull = new Sprite("Assets/heartFull.png");
             game.AddChild(heartFull);
@@ -121,6 +121,8 @@ class CogWheel : AnimationSprite
         eState = EState.Idle;
 
         idleAnimation = new AnimationSprite("Assets/playerIdle.png", 24, 1);
+        AddChild(idleAnimation);
+        idleAnimation.visible = false;
 
         // For some reason the size and offset of the animation does need the width of the actual sprite instead of the regular width. But this only happens in Tiled, not through GXP.
         tiledSpriteRadius = width;
@@ -128,13 +130,13 @@ class CogWheel : AnimationSprite
         idleAnimation.height = tiledSpriteRadius;
 
         takeDamageAnimation = new AnimationSprite("Assets/playerHurt.png", 24, 1);
+        AddChild(takeDamageAnimation);
+        takeDamageAnimation.visible = false;
+
+
         takeDamageAnimation.width = tiledSpriteRadius;
         takeDamageAnimation.height = tiledSpriteRadius;
 
-        idleAnimation.visible = false;
-        takeDamageAnimation.visible = false;
-        AddChild(idleAnimation);
-        AddChild(takeDamageAnimation);
 
         UpdateScreenPosition();
 
@@ -142,15 +144,15 @@ class CogWheel : AnimationSprite
         {
             heartEmpty = new Sprite("Assets/heartEmpty.png");
             game.AddChild(heartEmpty);
+            heartEmpty.SetXY(225, 205 * i + 385);
             emptyHearts.Add(heartEmpty);
             heartEmpty.scale = 0.2f;
-            heartEmpty.SetXY(25, 105 * i + 15);
             heartEmpty.visible = false;
             heartFull = new Sprite("Assets/heartFull.png");
             game.AddChild(heartFull);
+            heartFull.SetXY(225, 105 * i + 385);
             fullHearts.Add(heartFull);
             heartFull.scale = 0.2f;
-            heartFull.SetXY(25, 105 * i + 15);
             heartFull.visible = false;
         }
     }
@@ -267,14 +269,17 @@ class CogWheel : AnimationSprite
             }
 
             currentAnimation.visible = true;
+            counter = 0;
+            frame = 0;
         }
 
-        if (counter >= 6)
+        if (counter >= 12)
         {
             counter = 0;
             if (frame >= currentAnimation.frameCount)
             {
                 frame = 0;
+                eState = EState.Idle;
             }
 
             currentAnimation.SetFrame(frame);
@@ -476,6 +481,8 @@ class CogWheel : AnimationSprite
         {
             emptyHearts[i].visible = i > remainingHealth;
         }
+
+        
 
         if (takeDamage)
         {
