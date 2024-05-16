@@ -26,7 +26,7 @@ class CogWheel : AnimationSprite
     float bounciness = 0.6f;
     //float oldRotation = 0;
 
-    bool firstTime = true;
+    int firstTimeCounter = 0;
     bool moving;
     public bool takeDamage = false;
 
@@ -189,13 +189,13 @@ class CogWheel : AnimationSprite
         {
             level = (Level)parent;
 
-            if (firstTime)
+            if (firstTimeCounter == 0)
             {
                 float deltaTime = Time.deltaTime / 1000f;
                 velocity += gravity * drag * characterMass * deltaTime;
                 //if(extraVelocity.x == 0 && extraVelocity.y == 0) { extraVelocity = velocity; }
             }
-            else { firstTime = true; }
+            else { firstTimeCounter--; }
             _oldPosition = position;
 
             rotation = -parent.rotation;
@@ -220,9 +220,24 @@ class CogWheel : AnimationSprite
                     SoundManager.Hitting_surface_at_high_speed_sound.play(0.5f, 0);
                 }
                 ResolveCollision(firstCollision);
-                if (firstCollision.timeOfImpact == 0 && firstTime)
+                if (firstCollision.timeOfImpact == 0 && firstTimeCounter == 0)
                 {
-                    firstTime = false;
+                    if(firstCollision.other is SpikeWall)
+                    {
+                        firstTimeCounter = 6;
+                    }
+                    else if(firstCollision.other is CogWheel)
+                    {
+                        CogWheel lineCap = (CogWheel)firstCollision.other;
+                        if (lineCap.spawnType == typeof(Spikes))
+                        {
+                            firstTimeCounter = 6;
+                            Console.WriteLine("Spike line cap counter activated.");
+                        }
+                    }
+                    else { firstTimeCounter = 2;
+                        //Console.WriteLine("Regular counter activated.");
+                    }
                 }
 
 
@@ -372,16 +387,18 @@ class CogWheel : AnimationSprite
         {
             position += velocity * col.timeOfImpact;
             Vec2 unitNormal = col.normal.Normalized();
-            velocity.Reflect(unitNormal, bounciness);
             CogWheel lineCap = (CogWheel)col.other;
+            if (lineCap.spawnType == typeof(Platform))
+            {
+                velocity.Reflect(unitNormal, bounciness);
+            }
             if (lineCap.spawnType == typeof(Spikes))
             {
                 takeDamage = true;
+                velocity.Reflect(unitNormal, bounciness / 3);
             }
             if (lineCap.spawnType == typeof(Spring))
             {
-                position += velocity * col.timeOfImpact;
-                unitNormal = col.normal.Normal();
                 velocity.Reflect(unitNormal, bounciness * 2);
                 SoundManager.spring_sound.play(0.5f, 0);
             }
