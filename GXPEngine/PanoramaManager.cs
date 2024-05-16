@@ -6,7 +6,7 @@ class PanoramaManager : AnimationSprite
 {
     int counter;
     int frame;
-    public PanoramaManager(Vec2 position) : base("Assets/backgroundPlaceholder.png", 8, 1, -1, false, false)
+    public PanoramaManager(Vec2 position) : base("Assets/background.png", 8, 1, -1, false, false)
     {
 
     }
@@ -18,7 +18,7 @@ class PanoramaManager : AnimationSprite
 
     void Animation()
     {
-        if (counter >= 6)
+        if (counter >= 12)
         {
             counter = 0;
             if (frame >= frameCount)

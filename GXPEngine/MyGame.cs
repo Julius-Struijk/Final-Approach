@@ -30,8 +30,11 @@ public class MyGame : Game {
             // Checks whether the level has been won.
             if (level.winCheck())
             {
-                currentLevel = level.tileSet.nextLevel;
-                LoadLevel(currentLevel);
+                foreach(TileSet tileSet in level.tileSets)
+                {
+                    currentLevel = tileSet.nextLevel;
+                    LoadLevel(currentLevel);
+                }
             }
 
             // Checks whether the player has died.

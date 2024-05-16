@@ -128,8 +128,8 @@ class CogWheel : AnimationSprite
         idleAnimation.height = tiledSpriteRadius;
 
         takeDamageAnimation = new AnimationSprite("Assets/playerHurt.png", 24, 1);
-        takeDamageAnimation.width = radius * 2;
-        takeDamageAnimation.height = radius * 2;
+        takeDamageAnimation.width = tiledSpriteRadius;
+        takeDamageAnimation.height = tiledSpriteRadius;
 
         idleAnimation.visible = false;
         takeDamageAnimation.visible = false;
